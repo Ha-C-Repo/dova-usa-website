@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DOVA ROI Calculator — See Your Savings | D.O.V.A.</title>
+<meta name="description" content="Calculate how much your team wastes on physical key management. See DOVA's ROI for dealerships and fleets.">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="icon" type="image/svg+xml" href="/assets/images/dova_inline_badge.svg">
+</head>
+<body>
+
+<div class="announcement-bar">
+  <img src="/assets/images/dova_announcement_bar.svg" alt="DOVA — Patent Pending">
+</div>
+
+<nav class="nav" aria-label="Primary">
+  <div class="nav-inner">
+    <a class="nav-logo" href="/">D.O.V.A.</a>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+    <ul class="nav-links">
+      <li><a href="/how-it-works/">How It Works</a></li>
+      <li><a href="/product/">Product</a></li>
+      <li><a href="/features/">Features</a></li>
+      <li class="dropdown">
+        <a href="/solutions/">Solutions</a>
+        <ul class="dropdown-menu">
+          <li><a href="/solutions/dealerships/">For Dealerships</a></li>
+          <li><a href="/solutions/fleet/">For Fleet Operators</a></li>
+          <li><a href="/post-sale/">Post-Sale Options</a></li>
+        </ul>
+      </li>
+      <li><a href="/contact/">Contact</a></li>
+      <li><a class="nav-cta" href="/contact/">Book a Demo</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="container hero-inner">
+    <h1>DOVA Pays for Itself. Fast.</h1>
+    <p class="lead">The ROI isn't just time. It's accountability, protection, and disputes that never happen.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="container" style="max-width: 920px;">
+    <div class="section-head" style="text-align: left;">
+      <span class="sublabel">The Time Cost</span>
+      <h2>18 Minutes. Every Vehicle. Every Day.</h2>
+    </div>
+    <p>Industry data shows the average commercial fleet or dealership team wastes 18 minutes per vehicle access event — locating keys, signing out, chasing approvals, returning keys. At a dealership with 50 vehicle interactions a day, that's 15 hours of labor lost daily. DOVA eliminates that entirely.</p>
+  </div>
+</section>
+
+<section class="section-tight" style="background: var(--bg-alt);">
+  <div class="container">
+    <div class="section-head">
+      <h2>Build Your Own Savings Estimate</h2>
+      <p class="lead">Adjust the three inputs below. The math updates live.</p>
+    </div>
+
+    <div class="roi-calc">
+      <div class="roi-grid">
+        <div class="roi-field">
+          <label for="roi-team-size">Team Size (number of staff who access vehicles)</label>
+          <input id="roi-team-size" type="number" min="1" value="10">
+        </div>
+        <div class="roi-field">
+          <label for="roi-vehicles-per-day">Vehicle Accesses Per Person Per Day</label>
+          <input id="roi-vehicles-per-day" type="number" min="1" value="5">
+        </div>
+        <div class="roi-field" style="grid-column: 1 / -1;">
+          <label for="roi-rate">Average Employee Hourly Rate (USD)</label>
+          <input id="roi-rate" type="number" min="1" value="35">
+        </div>
+      </div>
+
+      <div class="roi-result">
+        <div class="savings-label">Estimated Monthly Savings</div>
+        <div class="savings-value" id="roi-monthly">$0</div>
+        <div class="savings-sub" id="roi-hours">0 hours / day saved</div>
+      </div>
+    </div>
+    <p class="muted text-center" style="font-size: 0.86rem; max-width: 640px; margin: 16px auto 0;">Calculation: team size &times; vehicle accesses per person &times; 18 minutes &times; 22 working days &times; hourly rate. Estimate only; your actual savings depend on operational mix.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container" style="max-width: 920px;">
+    <div class="section-head" style="text-align: left;">
+      <h2>Beyond Time — The Hidden Costs DOVA Eliminates</h2>
+    </div>
+    <ul class="check-list">
+      <li>Insurance disputes with no documentation — resolved with a cryptographic record</li>
+      <li>Key replacement costs ($200–$500 per vehicle key) — eliminated</li>
+      <li>Unauthorized vehicle use — prevented at the hardware level, before it happens</li>
+      <li>Employee theft deterrence — real-time identity-verified logs create proactive accountability</li>
+      <li>Customer dissatisfaction during test drives — eliminated with instant app-based access</li>
+      <li>Damage attribution disputes — resolved by diagnostic snapshots at every access event</li>
+    </ul>
+  </div>
+</section>
+
+<section class="cta-strip">
+  <div class="container">
+    <h2>Run the numbers on your operation.</h2>
+    <a href="/contact/" class="btn btn-primary">Talk to Sales</a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo">D.O.V.A.</span>
+        <div class="tagline">Smarter, Safer Vehicle Access</div>
+        <img class="badge" src="/assets/images/dova_footer_badge.svg" alt="DOVA Patent Pending Badge">
+      </div>
+      <div class="footer-col">
+        <h5>Site</h5>
+        <ul>
+          <li><a href="/how-it-works/">How It Works</a></li>
+          <li><a href="/product/">Product</a></li>
+          <li><a href="/features/">Features</a></li>
+          <li><a href="/solutions/">Solutions</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:matthew@dovausa.com">matthew@dovausa.com</a></li>
+          <li><a href="tel:+17132552172">(713) 255-2172</a></li>
+          <li><a href="https://dovausa.com">dovausa.com</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>&copy; D.O.V.A., LLC 2026. All Rights Reserved.<span class="sep">|</span>Patent Pending<span class="sep">|</span>San Antonio, Texas</div>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 215" width="160" height="215">
+  <defs>
+    <linearGradient id="shGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A7FE8"/>
+      <stop offset="100%" stop-color="#0A3870"/>
+    </linearGradient>
+    <linearGradient id="shInner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0D2040"/>
+      <stop offset="100%" stop-color="#060E1A"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <!-- Outer shield -->
+  <path d="M80,4 L155,34 L155,108 C155,155 120,186 80,212 C40,186 5,155 5,108 L5,34 Z"
+        fill="url(#shGrad)" stroke="#1A7FE8" stroke-width="1.5"/>
+
+  <!-- Inner fill -->
+  <path d="M80,14 L145,40 L145,108 C145,149 114,178 80,201 C46,178 15,149 15,108 L15,40 Z"
+        fill="url(#shInner)"/>
+
+  <!-- Decorative ring -->
+  <path d="M80,22 L137,46 L137,108 C137,144 110,171 80,193 C50,171 23,144 23,108 L23,46 Z"
+        fill="none" stroke="#1A7FE8" stroke-width="0.8" opacity="0.35"/>
+
+  <!-- Key icon — in upper wide section -->
+  <circle cx="80" cy="62" r="18" fill="none" stroke="#2E9BFF" stroke-width="2.5" filter="url(#glow)"/>
+  <circle cx="80" cy="55" r="8" fill="none" stroke="#2E9BFF" stroke-width="2.5"/>
+  <line x1="80" y1="63" x2="80" y2="77" stroke="#2E9BFF" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="80" y1="70" x2="85" y2="70" stroke="#2E9BFF" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="80" y1="76" x2="84" y2="76" stroke="#2E9BFF" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- D.O.V.A. — sits where shield is wide -->
+  <text x="80" y="98" font-family="Georgia, serif" font-weight="700" font-size="14"
+        fill="white" text-anchor="middle" letter-spacing="3">D.O.V.A.</text>
+
+  <!-- Divider -->
+  <line x1="32" y1="108" x2="128" y2="108" stroke="#1A7FE8" stroke-width="0.9" opacity="0.7"/>
+
+  <!-- PATENT PENDING pill — inner width here is 128px so pill fits comfortably -->
+  <!-- rect x=14, width=132: usable text area ~114px. Text ~92px. 11px padding each side. -->
+  <rect x="14" y="115" width="132" height="24" rx="12" fill="#1A7FE8"/>
+  <text x="80" y="131" font-family="Arial, sans-serif" font-weight="700" font-size="9.5"
+        fill="white" text-anchor="middle" letter-spacing="1.5">PATENT PENDING</text>
+
+  <!-- Thin separator -->
+  <line x1="38" y1="150" x2="122" y2="150" stroke="#1A7FE8" stroke-width="0.6" opacity="0.5"/>
+
+  <!-- Bottom tagline — precisely positioned where inner shield is wide enough:
+       y=158: inner width ≈ 94px  →  "DIGITAL ORCHESTRATION" at 5.5px ls=0.3 ≈ 70px  ✓
+       y=168: inner width ≈ 84px  →  "OF VEHICLE AUTHORIZATION" at 5.5px ls=0 ≈ 73px  ✓ -->
+  <text x="80" y="158" font-family="Arial, sans-serif" font-size="5.5"
+        fill="#4A8AAF" text-anchor="middle" letter-spacing="0.3">DIGITAL ORCHESTRATION</text>
+  <text x="80" y="169" font-family="Arial, sans-serif" font-size="5.5"
+        fill="#4A8AAF" text-anchor="middle" letter-spacing="0">OF VEHICLE AUTHORIZATION</text>
+</svg>
