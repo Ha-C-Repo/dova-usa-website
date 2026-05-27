@@ -45,11 +45,11 @@ assets/
 ## Forms
 
 `/contact/` uses a standard HTML form. The form `action` is empty by default and will
-show a fallback message instructing the visitor to email `matthew@dovausa.com` directly.
+show a fallback message instructing the visitor to email `info@dovausa.com` directly.
 
 To enable form submissions:
 1. Create a free account at [formspree.io](https://formspree.io)
-2. Create a new form, pointed at `matthew@dovausa.com`
+2. Create a new form, pointed at `info@dovausa.com`
 3. Set the form `action` in `contact/index.html` to your Formspree endpoint URL
 
 ## ROI calculator

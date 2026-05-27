@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (status) {
           status.style.display = 'block';
           status.style.color = '#2E6FDB';
-          status.textContent = 'Form not yet wired. Email matthew@dovausa.com directly — we will respond within one business day.';
+          status.textContent = 'Form not yet wired. Email info@dovausa.com directly — we will respond within one business day.';
         }
       }
     });

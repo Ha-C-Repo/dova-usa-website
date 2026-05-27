@@ -36,7 +36,6 @@
   <!-- Center tagline -->
   <text x="600" y="27" font-family="Arial, sans-serif" font-size="12" fill="#C8DDEF" text-anchor="middle" letter-spacing="0.5">Smarter, Safer Vehicle Access — Digital Orchestration of Vehicle Authorization</text>
 
-  <!-- Right side: getdova.com -->
-  <text x="1060" y="20" font-family="Arial, sans-serif" font-size="10" fill="#7AAED6" text-anchor="middle" letter-spacing="0.5">getdova.com</text>
-  <text x="1060" y="33" font-family="Arial, sans-serif" font-weight="700" font-size="10" fill="#2E9BFF" text-anchor="middle" letter-spacing="0.5">matthew@dovausa.com</text>
+  <!-- Right side: contact email -->
+  <text x="1060" y="27" font-family="Arial, sans-serif" font-weight="700" font-size="11" fill="#2E9BFF" text-anchor="middle" letter-spacing="0.5">info@dovausa.com</text>
 </svg>
