@@ -1508,19 +1508,55 @@ textarea:focus-visible {
   50%     { transform: scale(1.0); opacity: 1; }
 }
 
-@media (max-width: 960px) {
-  .imm2-hero {
-    grid-template-columns: 1fr;
-    padding: 60px 24px 40px; gap: 36px; min-height: auto;
+/* Compact viewport (700-959px): keep the canvas, lighter pin, tighter spacing */
+@media (max-width: 959px) and (min-width: 700px) {
+  .imm2-hero { min-height: 86vh; height: auto; }
+  .imm2-text { left: 32px; max-width: 80%; }
+  .imm2-h1 { font-size: clamp(38px, 7vw, 56px); }
+  .imm2-sub { font-size: 17px; max-width: 460px; }
+}
+
+/* Narrow viewport (480-699px): show the canvas, smaller, no pin */
+@media (max-width: 699px) and (min-width: 480px) {
+  .imm2-hero { display: block; height: auto; min-height: 92vh; position: relative; }
+  .imm2-text {
+    position: relative; top: auto; left: auto; transform: none;
+    z-index: 5; padding: 80px 24px 24px; max-width: 100%;
   }
-  .imm2-stage { height: 56vh; min-height: 360px; order: -1; }
+  .imm2-stage { position: relative !important; height: 60vh; min-height: 320px; inset: auto !important; }
+  #scene3d { display: block; }
+  .imm2-stage-fallback { display: none; }
+  .imm2-loading { display: flex; }
+  .imm2-h1 { font-size: clamp(36px, 9vw, 48px); }
+  .imm2-sub { font-size: 16px; }
+  .imm2-eyebrow { font-size: 10px; }
+}
+
+/* True mobile (< 480px): static AVIF fallback, no canvas */
+@media (max-width: 479px) {
+  .imm2-hero {
+    display: block;
+    height: auto;
+    min-height: 88vh;
+    padding: 60px 20px 40px;
+    position: relative;
+  }
+  .imm2-text {
+    position: relative; top: auto; left: auto; transform: none;
+    padding: 0; max-width: 100%;
+  }
+  .imm2-stage {
+    position: relative !important;
+    height: 50vh; min-height: 280px; order: -1;
+    inset: auto !important;
+    margin-bottom: 24px;
+  }
   #scene3d { display: none; }
   .imm2-stage-fallback { display: block; }
   .imm2-loading { display: none; }
-  .imm2-h1 { font-size: clamp(38px, 11vw, 56px); }
-  .imm2-sub { font-size: 17px; }
+  .imm2-h1 { font-size: clamp(34px, 10vw, 42px); }
+  .imm2-sub { font-size: 16px; }
 }
-
 @media (prefers-reduced-motion: reduce) {
   #scene3d { display: none; }
   .imm2-stage-fallback { display: block; }
