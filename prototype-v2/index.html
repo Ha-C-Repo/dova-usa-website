@@ -452,7 +452,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   renderer.setSize(stageRect.width, stageRect.height, false);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   // Solid light background (no alpha) so we can see the scene clearly
-  renderer.setClearColor(0xDCE7F3, 1);
+  renderer.setClearColor(0xC2D6E8, 1);
   renderer.toneMapping = THREE.LinearToneMapping;
   renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -464,24 +464,25 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   scene.environment = envTexture;
   envScene.children.forEach(c => { if (c.material) c.material.dispose(); });
 
-  // ===== Lights =====
-  const ambient = new THREE.AmbientLight(0xFFFFFF, 0.5);
-  scene.add(ambient);
-
-  const hemi = new THREE.HemisphereLight(0xFFFFFF, 0xCFDEEC, 0.7);
+  // ===== Lights - product render style (key + fill + rim) =====
+  const hemi = new THREE.HemisphereLight(0xFFFFFF, 0xB8CCE0, 0.6);
   scene.add(hemi);
 
-  const keyLight = new THREE.DirectionalLight(0xFFFFFF, 2.4);
-  keyLight.position.set(4, 6, 5);
+  const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.6);
+  keyLight.position.set(3, 5, 4);
   scene.add(keyLight);
 
-  const rimLight = new THREE.PointLight(0x4FC9E8, 1.8, 12);
-  rimLight.position.set(-3, 2, -2);
+  const fillLight = new THREE.DirectionalLight(0xCFE4F4, 0.6);
+  fillLight.position.set(-4, 2, 3);
+  scene.add(fillLight);
+
+  const rimLight = new THREE.PointLight(0x4FC9E8, 2.5, 14);
+  rimLight.position.set(-2.5, 2.5, -2);
   scene.add(rimLight);
 
-  const fillLight = new THREE.DirectionalLight(0xCFE4F4, 0.8);
-  fillLight.position.set(-4, 3, 4);
-  scene.add(fillLight);
+  const cloudFillLight = new THREE.PointLight(0x66D9F0, 1.5, 8);
+  cloudFillLight.position.set(3.2, 1.5, -0.5);
+  scene.add(cloudFillLight);
 
   // ===== Materials =====
   const NAVY = 0x14253A;
@@ -734,37 +735,37 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
   // ===== Camera keyframes for scroll =====
   const keyframes = [
-    { // 0: Install (module hovering above port, both cloud + port visible)
-      camPos: [3.2, 1.8, 5.2],
-      camLook: [0.4, 0.5, 0],
-      moduleY: 1.55,
+    { // 0: Install (module hovering above port, port visible center-bottom)
+      camPos: [1.8, 1.4, 3.5],
+      camLook: [0, 0.4, 0],
+      moduleY: 1.1,
       cloudIntensity: 0.8,
       label: 'Install',
       line1: 'Smarter,', line2: 'Safer Vehicle', line3: 'Access.',
       sub: 'The only cloud-connected OBD-II platform that works on every U.S. vehicle since 1996. No OEM agreements, no lockboxes, no lost keys.'
     },
-    { // 1: Enroll (module installed, camera close on port)
-      camPos: [1.4, 1.1, 2.8],
-      camLook: [0, 0.3, 0],
-      moduleY: 0.35,
+    { // 1: Enroll (module installed, camera close)
+      camPos: [1.2, 0.9, 2.4],
+      camLook: [0, 0.25, 0],
+      moduleY: 0.32,
       cloudIntensity: 1.2,
       label: 'Enroll',
       line1: 'Plug In.', line2: 'VIN Handshake.', line3: 'Online.',
       sub: 'A thirty-second install. The module joins the cloud authorization engine. The vehicle is now part of your fleet.'
     },
-    { // 2: Authorize (data flow, particles visible)
-      camPos: [2.4, 2.2, 3.6],
-      camLook: [1.2, 1.0, -0.4],
-      moduleY: 0.35,
+    { // 2: Authorize (pull back, data flow visible toward cloud)
+      camPos: [2.6, 1.6, 3.0],
+      camLook: [1.4, 0.9, -0.4],
+      moduleY: 0.32,
       cloudIntensity: 1.8,
       label: 'Authorize',
       line1: 'Three Gates.', line2: 'Cloud Mediated.', line3: 'Verifiable.',
       sub: 'Every start, every door, every shift authorized at the platform layer. The patent-pending architecture closes the gaps lockboxes leave open.'
     },
-    { // 3: Network (cloud takeover, gates active)
-      camPos: [4.2, 1.8, 2.4],
-      camLook: [3.0, 1.2, -0.8],
-      moduleY: 0.35,
+    { // 3: Network (cloud focus, gates active)
+      camPos: [3.6, 1.5, 1.8],
+      camLook: [3.0, 1.1, -0.8],
+      moduleY: 0.32,
       cloudIntensity: 2.4,
       label: 'Network',
       line1: 'Every Vehicle.', line2: 'One Network.', line3: 'Real Time.',
