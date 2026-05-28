@@ -466,8 +466,9 @@ button { font-family: inherit; cursor: pointer; }
   line-height: 1.08;
   letter-spacing: -1px;
   color: var(--navy);
-  overflow-wrap: anywhere;
-  hyphens: auto;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: manual;
   margin-bottom: 18px;
 }
 .s-h2 .acc { color: var(--blue); }
@@ -664,14 +665,19 @@ button { font-family: inherit; cursor: pointer; }
   z-index: 0;
 }
 .how-anim {
-  max-width: 1180px;
-  margin: 28px auto 0;
-  padding: 0 16px;
+  max-width: 940px;
+  margin: 36px auto 6px;
+  padding: 0 12px;
 }
 .how-anim-svg {
   width: 100%;
   height: auto;
   display: block;
+  min-height: 220px;
+}
+@media (max-width: 760px) {
+  .how-anim { max-width: 100%; padding: 0 8px; }
+  .how-anim-svg { min-height: 140px; }
 }
 .step {
   background: linear-gradient(170deg, #FFFFFF 0%, #FAFCFE 100%);
@@ -1405,10 +1411,11 @@ button { font-family: inherit; cursor: pointer; }
   .s-h2 { font-size: 30px; letter-spacing: -0.6px; }
   .section, .b-cta { padding-left: 18px; padding-right: 18px; }
   .stat-n { font-size: 48px; }
-  .imm2-h1, .hero-h1 { word-break: normal; overflow-wrap: anywhere; }
+  .imm2-h1, .hero-h1 { word-break: normal; overflow-wrap: break-word; }
   .prob-item, .aud-ttl, .aud-dsc, .c-h3, .c-body, .feature-h3, .feature-body, .s-body {
-    overflow-wrap: anywhere;
-    hyphens: auto;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: manual;
   }
 }
 
@@ -1491,6 +1498,52 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ----- magnetic CTA hint ----- */
 .magnetic { transition: transform 0.22s cubic-bezier(0.2,0.8,0.2,1); }
+
+/* ============================================================
+   Phase 5.7.11: tighter typography, hero legibility, justified body
+   ============================================================ */
+
+/* Body paragraphs: justified, tighter leading. Headings stay flush left. */
+.s-body, .c-body, .feature-body, .aud-dsc, .layer-body, .vert-body {
+  text-align: justify;
+  text-justify: inter-word;
+  hanging-punctuation: first last;
+  line-height: 1.62;
+}
+.s-body.centered, .b-cta .s-body, .center .s-body { text-align: center; }
+.imm2-sub {
+  line-height: 1.5;
+  text-align: left;
+}
+
+/* Hero text legibility against the immersive scene. Adds a soft dark
+   scrim under the text block plus a faint text-shadow on white copy
+   so the cloud bloom never washes it out. */
+.imm2-text {
+  background: linear-gradient(95deg,
+    rgba(5, 14, 28, 0.42) 0%,
+    rgba(5, 14, 28, 0.34) 55%,
+    rgba(5, 14, 28, 0.0) 100%);
+  padding: 26px 40px 30px 32px !important;
+  border-radius: 18px;
+  backdrop-filter: blur(6px) saturate(140%);
+  -webkit-backdrop-filter: blur(6px) saturate(140%);
+}
+.imm2-h1 {
+  text-shadow: 0 1px 2px rgba(5, 14, 28, 0.4), 0 4px 22px rgba(5, 14, 28, 0.32);
+}
+.imm2-h1 .gradline { text-shadow: none; }
+.imm2-sub {
+  text-shadow: 0 1px 2px rgba(5, 14, 28, 0.5);
+  color: rgba(232, 241, 250, 0.92) !important;
+}
+@media (max-width: 760px) {
+  .imm2-text {
+    background: linear-gradient(180deg,
+      rgba(5, 14, 28, 0.62) 0%,
+      rgba(5, 14, 28, 0.40) 100%);
+  }
+}
 
 /* utility */
 .center { text-align: center; }
