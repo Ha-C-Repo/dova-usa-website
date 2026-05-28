@@ -53,11 +53,13 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     powerPreference: 'high-performance'
   });
   renderer.setSize(stageRect.width, stageRect.height, false);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth >= 960 ? 2 : 1.5));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth >= 960 ? 2.5 : 1.6));
   renderer.setClearColor(0x050E1C, 1);
   renderer.toneMapping = THREE.LinearToneMapping;
   renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
   // === HDR environment ===
   const pmrem = new THREE.PMREMGenerator(renderer);
@@ -68,7 +70,22 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
   // === Lights ===
   scene.add(new THREE.HemisphereLight(0x4A88D6, 0x0A1A30, 0.42));
-  const keyLight = new THREE.DirectionalLight(0xE0F0FF, 1.3); keyLight.position.set(3, 5, 4); scene.add(keyLight);
+  const keyLight = new THREE.DirectionalLight(0xE0F0FF, 1.4);
+  keyLight.position.set(3.5, 5.5, 4.2);
+  keyLight.castShadow = true;
+  keyLight.shadow.mapSize.width = 1024;
+  keyLight.shadow.mapSize.height = 1024;
+  keyLight.shadow.camera.near = 0.5;
+  keyLight.shadow.camera.far = 18;
+  keyLight.shadow.camera.left = -4; keyLight.shadow.camera.right = 4;
+  keyLight.shadow.camera.top = 4;   keyLight.shadow.camera.bottom = -4;
+  keyLight.shadow.bias = -0.0008;
+  keyLight.shadow.radius = 4;
+  scene.add(keyLight);
+  // Kicker / back-rim light for silhouette separation
+  const kicker = new THREE.DirectionalLight(0x4FC9E8, 0.8);
+  kicker.position.set(-2.5, 3.5, -3.5);
+  scene.add(kicker);
   const fillLight = new THREE.DirectionalLight(0xCFE4F4, 0.6); fillLight.position.set(-4, 2, 3); scene.add(fillLight);
   const rimLight = new THREE.PointLight(0x4FC9E8, 2.5, 14); rimLight.position.set(-2.5, 2.5, -2); scene.add(rimLight);
   const cloudFillLight = new THREE.PointLight(0x66D9F0, 1.5, 8); cloudFillLight.position.set(3.2, 1.5, -0.5); scene.add(cloudFillLight);
@@ -79,8 +96,14 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
   const CHROME = 0xCED4DA;
 
   const navyPaint = new THREE.MeshPhysicalMaterial({
-    color: 0x0D1A2B, metalness: 0.35, roughness: 0.38,
-    clearcoat: 0.9, clearcoatRoughness: 0.15, envMapIntensity: 0.6
+    color: 0x1A2E4A,
+    metalness: 0.55,
+    roughness: 0.28,
+    clearcoat: 1.0,
+    clearcoatRoughness: 0.08,
+    envMapIntensity: 0.95,
+    sheen: 0.25,
+    sheenColor: new THREE.Color(0x4A7AB8)
   });
   const navyLightMat = new THREE.MeshPhysicalMaterial({
     color: NAVY_LIGHT, metalness: 0.7, roughness: 0.3, clearcoat: 0.4, envMapIntensity: 0.45
@@ -103,8 +126,9 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
   const dashGroup = new THREE.Group();
   const dashFloor = new THREE.Mesh(
     new THREE.CircleGeometry(8, 64),
-    new THREE.MeshStandardMaterial({ color: 0x081427, metalness: 0.0, roughness: 0.85 })
+    new THREE.MeshStandardMaterial({ color: 0x0A1830, metalness: 0.05, roughness: 0.78 })
   );
+  dashFloor.receiveShadow = true;
   dashFloor.rotation.x = -Math.PI / 2;
   dashFloor.position.y = -0.4;
   dashGroup.add(dashFloor);
@@ -158,7 +182,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     bevelThickness: 0.025, bevelSize: 0.025, bevelSegments: 4, curveSegments: 14
   });
   bodyGeo.translate(0, 0, -0.425);
-  const body = new THREE.Mesh(bodyGeo, navyPaint);
+  const body = new THREE.Mesh(bodyGeo, navyPaint); body.castShadow = true; body.receiveShadow = false;
   body.rotation.x = -Math.PI / 2;
   body.rotation.z = Math.PI / 2;
   moduleGroup.add(body);
@@ -171,6 +195,59 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
   facePlate.position.set(0, 0.21, 0);
   moduleGroup.add(facePlate);
 
+  // === Detail: brushed metal bezel around the top face ===
+  const bezelMat = new THREE.MeshPhysicalMaterial({
+    color: 0xAAB4C2, metalness: 1.0, roughness: 0.32,
+    clearcoat: 0.4, clearcoatRoughness: 0.2, envMapIntensity: 1.1
+  });
+  const bezelGeo = new THREE.TorusGeometry(0.43, 0.012, 6, 64);
+  const bezel = new THREE.Mesh(bezelGeo, bezelMat);
+  bezel.rotation.x = -Math.PI / 2;
+  bezel.position.set(0, 0.214, 0);
+  bezel.scale.set(1.6, 1.6, 1.0);
+  bezel.castShadow = true;
+  moduleGroup.add(bezel);
+
+  // === Detail: vent grille (5 thin slots) on the top face, rear area ===
+  const ventMat = new THREE.MeshStandardMaterial({
+    color: 0x06101E, metalness: 0.6, roughness: 0.5, envMapIntensity: 0.4
+  });
+  for (let vi = 0; vi < 5; vi++) {
+    const vent = new THREE.Mesh(
+      new THREE.BoxGeometry(0.32, 0.005, 0.018),
+      ventMat
+    );
+    vent.position.set(0, 0.214, -0.18 - vi * 0.04);
+    moduleGroup.add(vent);
+  }
+
+  // === Detail: small DOVA wordmark stripe (cyan emissive accent on top) ===
+  const wordmarkMat = new THREE.MeshBasicMaterial({ color: 0x4FC9E8, transparent: true, opacity: 0.42 });
+  const wordmark = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 0.018), wordmarkMat);
+  wordmark.rotation.x = -Math.PI / 2;
+  wordmark.position.set(0, 0.216, 0.12);
+  moduleGroup.add(wordmark);
+
+  // === Detail: cable nub + extension exiting the back ===
+  const cableMat = new THREE.MeshStandardMaterial({
+    color: 0x0C0F14, metalness: 0.15, roughness: 0.7
+  });
+  const cableNub = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.028, 0.034, 0.10, 16),
+    cableMat
+  );
+  cableNub.rotation.x = Math.PI / 2;
+  cableNub.position.set(0, 0.05, -0.43);
+  cableNub.castShadow = true;
+  moduleGroup.add(cableNub);
+  const cable = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.025, 0.025, 0.32, 12),
+    cableMat
+  );
+  cable.rotation.x = Math.PI / 2;
+  cable.position.set(0, 0.05, -0.58);
+  cable.castShadow = true;
+  moduleGroup.add(cable);
   const ledRing = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.012, 16, 48), cyanRingMat);
   ledRing.rotation.x = -Math.PI / 2;
   ledRing.position.set(0, 0.225, 0);

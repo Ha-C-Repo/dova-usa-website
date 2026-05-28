@@ -2094,3 +2094,35 @@ textarea:focus-visible {
   .imm2-hero::after { width: 100%; }
 }
 .imm2-text { z-index: 5; }
+/* ============================================================
+   Phase 5.5: announcement bar translucency + extended hero canvas
+   The opaque dark bar was clipping the top of the 3D scene.
+   Now it overlays the canvas with the same blur+tint as the nav.
+   ============================================================ */
+.announce-bar {
+  background: rgba(5, 14, 28, 0.55) !important;
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid rgba(232, 241, 250, 0.06);
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+}
+.nav {
+  position: fixed;
+  top: 44px; left: 0; right: 0;
+  z-index: 49;
+}
+/* push the immersive hero up so its canvas starts at viewport top, behind the bar */
+.imm2-hero {
+  margin-top: -108px;
+  padding-top: 0;
+}
+/* keep content inside .imm2-text below the chrome */
+.imm2-text {
+  top: calc(50% + 30px);
+}
+@media (max-width: 699px) {
+  .imm2-hero { margin-top: -88px; }
+  .nav { top: 36px; }
+}
