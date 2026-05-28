@@ -276,11 +276,17 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
         loader.load('/assets/models/dova-module.glb', (gltf) => {
           const bespoke = gltf.scene;
           bespoke.scale.set(1, 1, 1);
-          bespoke.position.copy(moduleGroup.position);
+          // Parent under moduleGroup so scroll-driven animations move the bespoke
+          // with the same transform that drove the procedural placeholder. Local
+          // position stays at origin; moduleGroup carries the world placement.
+          bespoke.position.set(0, 0, 0);
           bespoke.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
-          scene.add(bespoke);
-          // Hide the procedural placeholder by setting children invisible
-          moduleGroup.traverse(o => { if (o.isMesh) o.visible = false; });
+          moduleGroup.add(bespoke);
+          // Hide the procedural placeholder by setting children invisible.
+          // Skip the bespoke we just added so it stays visible.
+          moduleGroup.traverse(o => {
+            if (o.isMesh && o !== bespoke && !bespoke.getObjectById(o.id)) o.visible = false;
+          });
           // Re-link the moduleGroup reference so the tick loop animates the new model
           window.__dovaModuleSwap = { from: moduleGroup, to: bespoke };
         }, undefined, () => {});
