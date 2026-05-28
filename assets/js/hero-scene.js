@@ -242,31 +242,43 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
   setTimeout(() => loadingEl && loadingEl.classList.add('gone'), 250);
 
-  // === Keyframes ===
+  // === Keyframes (6 acts for the multi-act scroll story) ===
   const keyframes = [
-    {
-      camPos: [1.8, 1.4, 3.5], camLook: [0, 0.4, 0],
-      moduleY: 1.1, cloudIntensity: 0.8, label: 'Install',
+    { // ACT 1 - Install. Module floats above the dashboard, port visible.
+      camPos: [2.0, 1.5, 3.6], camLook: [0, 0.4, 0],
+      moduleY: 1.15, cloudIntensity: 0.6, label: 'Install',
       line1: 'Smarter,', line2: 'Safer Vehicle', line3: 'Access.',
       sub: 'The only cloud-connected OBD-II platform that works on every U.S. vehicle since 1996. No OEM agreements, no lockboxes, no lost keys.'
     },
-    {
-      camPos: [1.2, 0.9, 2.4], camLook: [0, 0.25, 0],
-      moduleY: 0.32, cloudIntensity: 1.2, label: 'Enroll',
+    { // ACT 2 - Enroll. Module seats into the port. VIN handshake.
+      camPos: [1.1, 0.85, 2.3], camLook: [0, 0.22, 0],
+      moduleY: 0.32, cloudIntensity: 1.0, label: 'Enroll',
       line1: 'Plug In.', line2: 'VIN Handshake.', line3: 'Online.',
       sub: 'A thirty-second install. The module joins the cloud authorization engine. The vehicle is now part of your fleet.'
     },
-    {
-      camPos: [2.6, 1.6, 3.0], camLook: [1.4, 0.9, -0.4],
-      moduleY: 0.32, cloudIntensity: 1.8, label: 'Authorize',
+    { // ACT 3 - Authorize. Pull back, data flow visible toward cloud.
+      camPos: [2.5, 1.55, 2.95], camLook: [1.2, 0.85, -0.3],
+      moduleY: 0.32, cloudIntensity: 1.6, label: 'Authorize',
       line1: 'Three Gates.', line2: 'Cloud Mediated.', line3: 'Verifiable.',
       sub: 'Every start, every door, every shift authorized at the platform layer. The patent-pending architecture closes the gaps lockboxes leave open.'
     },
-    {
-      camPos: [3.6, 1.5, 1.8], camLook: [3.0, 1.1, -0.8],
-      moduleY: 0.32, cloudIntensity: 2.4, label: 'Network',
+    { // ACT 4 - Audit. Camera frames the cloud sphere. Particle stream peaks.
+      camPos: [3.4, 1.45, 1.6], camLook: [2.9, 1.0, -0.7],
+      moduleY: 0.32, cloudIntensity: 2.0, label: 'Audit',
+      line1: 'Every Access.', line2: 'Cryptographic.', line3: 'Permanent.',
+      sub: 'Each authorization is bound to a real-time diagnostic snapshot. Write-once, tamper-evident, legally admissible.'
+    },
+    { // ACT 5 - Network. Wide pull-back shows module-cloud-fleet relationship.
+      camPos: [4.2, 2.1, 2.2], camLook: [2.4, 1.1, -0.6],
+      moduleY: 0.32, cloudIntensity: 2.5, label: 'Network',
       line1: 'Every Vehicle.', line2: 'One Network.', line3: 'Real Time.',
       sub: 'Multiple makes, multiple model years, every vehicle on one cloud authorization engine. Fleets unified.'
+    },
+    { // ACT 6 - Outcome. Final hero framing, slight orbit, all subsystems lit.
+      camPos: [2.6, 1.3, 4.0], camLook: [0.6, 0.5, -0.2],
+      moduleY: 0.32, cloudIntensity: 2.2, label: 'Outcome',
+      line1: 'Smarter,', line2: 'Safer Vehicle', line3: 'Access.',
+      sub: 'Identity verified. Vehicle authorized. Diagnostic recorded. The full DOVA loop, on every vehicle you operate.'
     }
   ];
 
@@ -412,7 +424,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
       window.ScrollTrigger.create({
         trigger: heroSection,
         start: 'top top',
-        end: '+=300%',
+        end: '+=500%',
         scrub: 0.8,
         pin: true,
         pinSpacing: true,
