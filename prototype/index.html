@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D.O.V.A. — Immersive Prototype (Phase 1)</title>
+<meta name="description" content="Phase 1 prototype: interactive 3D hero with OBD-II port, DOVA module, and cloud authorization data flow. Not production.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="/assets/css/styles.css">
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<style>
+  .scene-wrap {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    min-height: 620px;
+    background: linear-gradient(160deg, #FFFFFF 0%, #F4F8FC 55%, #EBF2FA 100%);
+    overflow: hidden;
+  }
+  .scene-canvas { position: absolute; inset: 0; }
+  .scene-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 90px 48px 80px;
+    text-align: center;
+    z-index: 2;
+  }
+  .scene-overlay > * { pointer-events: auto; }
+  .scene-grid {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(26,127,232,0.10) 1px, transparent 1px);
+    background-size: 30px 30px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .scene-vignette {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 85% 75% at 50% 45%, transparent 30%, #FFFFFF 100%);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .scene-fade {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 100px;
+    background: linear-gradient(transparent, #F4F8FC);
+    pointer-events: none;
+    z-index: 1;
+  }
+  .proto-pill {
+    position: fixed;
+    top: 12px;
+    right: 20px;
+    z-index: 200;
+    background: #07192E;
+    color: white;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  }
+  .proto-pill a { color: #7EC4FF; margin-left: 8px; font-weight: 500; text-transform: none; letter-spacing: 0; }
+</style>
+</head>
+<body>
+
+<div class="proto-pill">PHASE 1 PROTOTYPE <a href="/">&larr; back to live site</a></div>
+
+<!-- Announcement bar -->
+<div class="announce-bar">
+  <div class="ab-left">
+    <span class="ab-brand">D.O.V.A.</span>
+    <span class="ab-badge">PATENT PENDING</span>
+    <span class="ab-tagline">Digital Orchestration of Vehicle Authorization</span>
+  </div>
+  <div class="ab-right">
+    <a href="mailto:info@dovausa.com">info@dovausa.com</a>&nbsp;·&nbsp;(713) 255-2172
+  </div>
+</div>
+
+<!-- Nav -->
+<nav class="nav" aria-label="Primary">
+  <a href="/" class="nav-logo">
+    <span class="logo-box"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L21 8l-3-3"/></svg></span>
+    D.O.V.A.
+  </a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+  <ul class="nav-links">
+    <li><a href="/how-it-works/">How It Works</a></li>
+    <li><a href="/product/">Product</a></li>
+    <li><a href="/features/">Features</a></li>
+    <li class="dropdown">
+      <a href="/solutions/">Solutions</a>
+      <ul class="dropdown-menu">
+        <li><a href="/solutions/dealerships/">For Dealerships</a></li>
+        <li><a href="/solutions/fleet/">For Fleet Operators</a></li>
+        <li><a href="/post-sale/">Post-Sale Options</a></li>
+        <li><a href="/roi/">ROI Calculator</a></li>
+      </ul>
+    </li>
+    <li><a href="/contact/">Contact</a></li>
+    <li><a class="nav-cta" href="/contact/">Book a Demo</a></li>
+  </ul>
+</nav>
+
+<!-- 3D hero scene -->
+<section class="scene-wrap">
+  <canvas id="scene" class="scene-canvas"></canvas>
+  <div class="scene-grid"></div>
+  <div class="scene-vignette"></div>
+  <div class="scene-fade"></div>
+  <div class="scene-overlay">
+    <div class="hero-badge"><span class="pulse-dot"></span>Patent Pending · Enterprise Vehicle Access</div>
+    <h1 class="hero-h1">Smarter, Safer<br><span class="grad-text">Vehicle Access.</span></h1>
+    <p class="hero-sub">The only cloud-connected OBD-II platform that works on every U.S. vehicle since 1996 — no OEM agreements, no lockboxes, no lost keys.</p>
+    <div class="hero-btns">
+      <a href="/contact/" class="btn-p">Book a Demo</a>
+      <a href="/how-it-works/" class="btn-s">How It Works &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<!-- Caption strip -->
+<div class="stats-bar">
+  <div class="stat-cell"><div class="stat-n">1996<span class="hi">+</span></div><div class="stat-l">Every U.S. vehicle compatible</div></div>
+  <div class="stat-cell"><div class="stat-n">$0</div><div class="stat-l">OEM licensing fees required</div></div>
+  <div class="stat-cell"><div class="stat-n">18<span class="hi"> min</span></div><div class="stat-l">Avg. time wasted per access — eliminated</div></div>
+  <div class="stat-cell"><div class="stat-n">100<span class="hi">%</span></div><div class="stat-l">Fleet compatible, day one</div></div>
+</div>
+
+<section class="section white">
+  <div class="inner-narrow">
+    <div class="eyebrow">Prototype Notes</div>
+    <h2 class="s-h2">What this prototype is.</h2>
+    <p class="s-body">This is a Phase 1 prototype, not production. It shows a 3D interactive hero replacing the static one on the live site. The scene above renders in real-time WebGL via Three.js: a stylized OBD-II port with a DOVA module installed, particle data flowing out to a glowing cloud sphere representing the authorization engine.</p>
+    <p class="s-body" style="margin-top: 18px;">Interactions: the scene slowly auto-rotates and responds to mouse movement (parallax). The data particles loop continuously. On mobile, the scene scales down but remains interactive.</p>
+    <p class="s-body" style="margin-top: 18px;">Built in one session using hand-coded Three.js geometry primitives (no external 3D model files). Phase 2 production would replace the primitives with hand-modeled GLB assets, add the scroll-driven How-It-Works narrative, and ship to a contract Three.js developer for polish and optimization.</p>
+    <div class="btn-row" style="margin-top: 32px; justify-content: flex-start;">
+      <a href="/" class="btn-s">&larr; Back to live site</a>
+      <a href="/contact/" class="btn-p">Book a Demo</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="f-logo"><span class="logo-box"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L21 8l-3-3"/></svg></span>D.O.V.A., LLC</div>
+      <div class="f-tag">Smarter, Safer Vehicle Access</div>
+      <div class="f-contact"><a href="mailto:info@dovausa.com">info@dovausa.com</a><a href="tel:+17132552172">(713) 255-2172</a><a href="https://dovausa.com">dovausa.com</a></div>
+    </div>
+    <div class="f-col"><h4>Platform</h4><a href="/how-it-works/">How It Works</a><a href="/product/">Product</a><a href="/features/">Features</a><a href="/post-sale/">Post-Sale Options</a></div>
+    <div class="f-col"><h4>Solutions</h4><a href="/solutions/dealerships/">For Dealerships</a><a href="/solutions/fleet/">For Fleet Operators</a><a href="/roi/">ROI Calculator</a><a href="/contact/">Book a Demo</a></div>
+  </div>
+  <div class="f-bottom"><p>&copy; D.O.V.A., LLC 2026. All Rights Reserved. &middot; San Antonio, Texas</p><div class="f-pills"><span class="f-pill">Patent Pending</span><span class="f-pill">Prototype</span></div></div>
+</footer>
+
+<!-- Three.js scene -->
+<script type="importmap">
+  { "imports": { "three": "https://unpkg.com/three@0.165.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const canvas = document.getElementById('scene');
+const wrap = canvas.parentElement;
+
+// ---- Renderer
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setSize(wrap.clientWidth, wrap.clientHeight, false);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.1;
+
+// ---- Scene
+const scene = new THREE.Scene();
+
+// ---- Camera
+const camera = new THREE.PerspectiveCamera(38, wrap.clientWidth / wrap.clientHeight, 0.1, 100);
+camera.position.set(0, 0.6, 5.5);
+camera.lookAt(0, 0, 0);
+
+// ---- Lights
+const hemi = new THREE.HemisphereLight(0xEAF2FD, 0xFFFFFF, 0.85);
+scene.add(hemi);
+
+const key = new THREE.DirectionalLight(0xFFFFFF, 1.2);
+key.position.set(3, 4, 4);
+scene.add(key);
+
+const rim = new THREE.DirectionalLight(0x1A7FE8, 0.9);
+rim.position.set(-3, 2, -2);
+scene.add(rim);
+
+const accent = new THREE.PointLight(0x00AACC, 1.6, 8);
+accent.position.set(0.8, 1.5, 1.2);
+scene.add(accent);
+
+// ---- Materials
+const navy = new THREE.MeshStandardMaterial({ color: 0x07192E, metalness: 0.65, roughness: 0.35 });
+const navyLite = new THREE.MeshStandardMaterial({ color: 0x0D2540, metalness: 0.5, roughness: 0.45 });
+const blueMat = new THREE.MeshStandardMaterial({ color: 0x1A7FE8, metalness: 0.4, roughness: 0.3, emissive: 0x0D2540, emissiveIntensity: 0.4 });
+const cyanMat = new THREE.MeshStandardMaterial({ color: 0x00AACC, metalness: 0.3, roughness: 0.25, emissive: 0x004D5C, emissiveIntensity: 0.7 });
+const metalMat = new THREE.MeshStandardMaterial({ color: 0xD0E2F0, metalness: 0.9, roughness: 0.18 });
+
+// ---- Group root (so we can rotate everything together)
+const root = new THREE.Group();
+scene.add(root);
+
+// ----- OBD-II port (trapezoidal connector, female receptacle)
+// The OBD-II port has 16 pins in 2 rows of 8 in a trapezoidal shape.
+const portGroup = new THREE.Group();
+root.add(portGroup);
+
+// Port outer trapezoidal shell
+const portShape = new THREE.Shape();
+const portW = 1.6, portH = 0.55, portTaperW = 0.18;
+portShape.moveTo(-portW/2, -portH/2);
+portShape.lineTo(portW/2, -portH/2);
+portShape.lineTo(portW/2 - portTaperW, portH/2);
+portShape.lineTo(-portW/2 + portTaperW, portH/2);
+portShape.closePath();
+
+const portExtrude = new THREE.ExtrudeGeometry(portShape, { depth: 0.45, bevelEnabled: true, bevelSegments: 3, bevelSize: 0.04, bevelThickness: 0.04 });
+const portShell = new THREE.Mesh(portExtrude, navy);
+portShell.rotation.x = Math.PI / 2;
+portShell.position.set(0, -0.5, -0.45);
+portGroup.add(portShell);
+
+// Inner cavity (recessed plate)
+const cavityShape = new THREE.Shape();
+const cW = portW - 0.18, cH = portH - 0.12, cTaperW = portTaperW - 0.04;
+cavityShape.moveTo(-cW/2, -cH/2);
+cavityShape.lineTo(cW/2, -cH/2);
+cavityShape.lineTo(cW/2 - cTaperW, cH/2);
+cavityShape.lineTo(-cW/2 + cTaperW, cH/2);
+cavityShape.closePath();
+const cavityGeo = new THREE.ExtrudeGeometry(cavityShape, { depth: 0.25, bevelEnabled: false });
+const cavityMesh = new THREE.Mesh(cavityGeo, navyLite);
+cavityMesh.rotation.x = Math.PI / 2;
+cavityMesh.position.set(0, -0.42, -0.25);
+portGroup.add(cavityMesh);
+
+// 16 pins (2 rows of 8) - metallic tubes
+const pinGeo = new THREE.CylinderGeometry(0.025, 0.025, 0.16, 12);
+const rowSpacing = 0.12;
+const colSpacing = 0.16;
+for (let row = 0; row < 2; row++) {
+  for (let col = 0; col < 8; col++) {
+    const pin = new THREE.Mesh(pinGeo, metalMat);
+    const xOffset = (col - 3.5) * colSpacing;
+    const yOffset = (row - 0.5) * rowSpacing;
+    pin.position.set(xOffset, -0.42 + yOffset, -0.32);
+    pin.rotation.x = Math.PI / 2;
+    portGroup.add(pin);
+  }
+}
+
+// ----- DOVA module (cube w/ rounded corners, plugged into port)
+const moduleGroup = new THREE.Group();
+root.add(moduleGroup);
+
+// Main body (chamfered box)
+const moduleBodyGeo = new THREE.BoxGeometry(1.5, 0.95, 0.7, 1, 1, 1).toNonIndexed();
+const moduleBody = new THREE.Mesh(moduleBodyGeo, navy);
+moduleBody.position.set(0, 0.1, 0.42);
+moduleGroup.add(moduleBody);
+
+// Top blue accent strip
+const stripGeo = new THREE.BoxGeometry(1.45, 0.04, 0.66);
+const stripMesh = new THREE.Mesh(stripGeo, blueMat);
+stripMesh.position.set(0, 0.59, 0.42);
+moduleGroup.add(stripMesh);
+
+// Bottom connector blade (goes into port)
+const bladeGeo = new THREE.BoxGeometry(1.42, 0.45, 0.18);
+const bladeMesh = new THREE.Mesh(bladeGeo, navyLite);
+bladeMesh.position.set(0, -0.5, 0.0);
+moduleGroup.add(bladeMesh);
+
+// LED status light (cyan, emissive)
+const ledGeo = new THREE.CylinderGeometry(0.06, 0.06, 0.02, 16);
+const ledMesh = new THREE.Mesh(ledGeo, cyanMat);
+ledMesh.rotation.x = Math.PI / 2;
+ledMesh.position.set(0.5, 0.1, 0.77);
+moduleGroup.add(ledMesh);
+
+// LED glow halo
+const haloGeo = new THREE.SphereGeometry(0.16, 24, 24);
+const haloMat = new THREE.MeshBasicMaterial({ color: 0x00AACC, transparent: true, opacity: 0.18 });
+const haloMesh = new THREE.Mesh(haloGeo, haloMat);
+haloMesh.position.copy(ledMesh.position);
+moduleGroup.add(haloMesh);
+
+// DOVA logo text plate (front face)
+const logoPlateGeo = new THREE.BoxGeometry(0.7, 0.18, 0.02);
+const logoPlateMat = new THREE.MeshStandardMaterial({ color: 0xFFFFFF, metalness: 0.1, roughness: 0.4, emissive: 0x1A7FE8, emissiveIntensity: 0.15 });
+const logoPlate = new THREE.Mesh(logoPlateGeo, logoPlateMat);
+logoPlate.position.set(-0.25, 0.1, 0.78);
+moduleGroup.add(logoPlate);
+
+// Side fins (for visual interest, suggest heat dissipation)
+const finGeo = new THREE.BoxGeometry(0.025, 0.75, 0.5);
+for (let i = -3; i <= 3; i++) {
+  if (i === 0) continue;
+  const fin = new THREE.Mesh(finGeo, navyLite);
+  fin.position.set(i * 0.04, 0.1, 0.0);
+  moduleGroup.add(fin);
+}
+
+// ----- Cloud sphere (right side, glowing, represents authorization engine)
+const cloudGroup = new THREE.Group();
+cloudGroup.position.set(3.0, 1.0, -0.5);
+root.add(cloudGroup);
+
+// Inner solid sphere
+const cloudCoreGeo = new THREE.IcosahedronGeometry(0.45, 1);
+const cloudCoreMat = new THREE.MeshStandardMaterial({ color: 0x1A7FE8, metalness: 0.3, roughness: 0.4, emissive: 0x00AACC, emissiveIntensity: 0.7, flatShading: true });
+const cloudCore = new THREE.Mesh(cloudCoreGeo, cloudCoreMat);
+cloudGroup.add(cloudCore);
+
+// Outer wireframe shell
+const cloudShellGeo = new THREE.IcosahedronGeometry(0.68, 1);
+const cloudShellMat = new THREE.MeshBasicMaterial({ color: 0x1A7FE8, wireframe: true, transparent: true, opacity: 0.4 });
+const cloudShell = new THREE.Mesh(cloudShellGeo, cloudShellMat);
+cloudGroup.add(cloudShell);
+
+// Atmospheric glow
+const cloudGlowGeo = new THREE.SphereGeometry(1.0, 24, 24);
+const cloudGlowMat = new THREE.MeshBasicMaterial({ color: 0x00AACC, transparent: true, opacity: 0.06 });
+const cloudGlow = new THREE.Mesh(cloudGlowGeo, cloudGlowMat);
+cloudGroup.add(cloudGlow);
+
+// Three small "gate" rings around the cloud (representing the 3-gate engine)
+const gateRingGeo = new THREE.TorusGeometry(0.78, 0.012, 8, 64);
+const gateRingMat = new THREE.MeshBasicMaterial({ color: 0x1A7FE8, transparent: true, opacity: 0.7 });
+const gateRings = [];
+for (let i = 0; i < 3; i++) {
+  const ring = new THREE.Mesh(gateRingGeo, gateRingMat.clone());
+  ring.rotation.x = Math.PI / 2 + i * 0.7;
+  ring.rotation.y = i * 1.1;
+  cloudGroup.add(ring);
+  gateRings.push(ring);
+}
+
+// ----- Data particles (flow from module LED -> cloud sphere)
+const particleCount = 60;
+const particleGeo = new THREE.BufferGeometry();
+const positions = new Float32Array(particleCount * 3);
+const progress = new Float32Array(particleCount);
+
+const startPos = new THREE.Vector3(0.5, 0.1, 0.77);
+const endPos = cloudGroup.position.clone();
+
+for (let i = 0; i < particleCount; i++) {
+  progress[i] = i / particleCount;
+  positions[i * 3] = startPos.x;
+  positions[i * 3 + 1] = startPos.y;
+  positions[i * 3 + 2] = startPos.z;
+}
+particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+const particleMat = new THREE.PointsMaterial({
+  color: 0x00AACC,
+  size: 0.06,
+  transparent: true,
+  opacity: 0.85,
+  sizeAttenuation: true,
+  blending: THREE.AdditiveBlending,
+  depthWrite: false
+});
+const particles = new THREE.Points(particleGeo, particleMat);
+scene.add(particles);
+
+// ----- Ambient particle haze (background)
+const hazeCount = 200;
+const hazeGeo = new THREE.BufferGeometry();
+const hazePos = new Float32Array(hazeCount * 3);
+for (let i = 0; i < hazeCount; i++) {
+  hazePos[i * 3] = (Math.random() - 0.5) * 12;
+  hazePos[i * 3 + 1] = (Math.random() - 0.5) * 8;
+  hazePos[i * 3 + 2] = (Math.random() - 0.5) * 8 - 2;
+}
+hazeGeo.setAttribute('position', new THREE.BufferAttribute(hazePos, 3));
+const hazeMat = new THREE.PointsMaterial({
+  color: 0x1A7FE8,
+  size: 0.025,
+  transparent: true,
+  opacity: 0.35,
+  sizeAttenuation: true
+});
+const haze = new THREE.Points(hazeGeo, hazeMat);
+scene.add(haze);
+
+// ----- Initial root orientation (slight tilt for cinematic feel)
+root.rotation.x = -0.05;
+root.position.y = -0.2;
+root.position.x = -0.5;
+
+// ----- Mouse parallax
+let mouseX = 0, mouseY = 0;
+let targetRotY = 0, targetRotX = 0;
+window.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth) * 2 - 1;
+  mouseY = (e.clientY / window.innerHeight) * 2 - 1;
+});
+
+// ----- Resize
+function resize() {
+  const w = wrap.clientWidth, h = wrap.clientHeight;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+}
+window.addEventListener('resize', resize);
+
+// ----- Animation loop
+let t = 0;
+function animate() {
+  requestAnimationFrame(animate);
+  t += 0.012;
+
+  // Auto-rotate slowly
+  targetRotY = mouseX * 0.18;
+  targetRotX = -mouseY * 0.10 - 0.05;
+  root.rotation.y += (targetRotY + t * 0.05 - root.rotation.y) * 0.04;
+  root.rotation.x += (targetRotX - root.rotation.x) * 0.04;
+
+  // Pulse the LED halo
+  const pulse = (Math.sin(t * 4) + 1) / 2;
+  haloMesh.scale.setScalar(1 + pulse * 0.35);
+  haloMat.opacity = 0.12 + pulse * 0.14;
+  cyanMat.emissiveIntensity = 0.5 + pulse * 0.5;
+
+  // Spin the cloud core slowly
+  cloudCore.rotation.x += 0.006;
+  cloudCore.rotation.y += 0.009;
+  cloudShell.rotation.x -= 0.004;
+  cloudShell.rotation.y += 0.006;
+  cloudGlow.scale.setScalar(1 + Math.sin(t * 1.5) * 0.04);
+
+  // Counter-rotate gate rings
+  gateRings.forEach((r, i) => {
+    r.rotation.z += (0.008 + i * 0.003) * (i % 2 ? 1 : -1);
+  });
+
+  // Advance data particles along an arc from module LED to cloud
+  const pos = particleGeo.attributes.position.array;
+  for (let i = 0; i < particleCount; i++) {
+    progress[i] += 0.006;
+    if (progress[i] > 1) progress[i] -= 1;
+
+    const p = progress[i];
+    // Bezier curve from startPos to endPos with control point above
+    const cp = new THREE.Vector3(1.5, 2.0, 0.5);
+    const u = 1 - p;
+    const x = u * u * startPos.x + 2 * u * p * cp.x + p * p * endPos.x;
+    const y = u * u * startPos.y + 2 * u * p * cp.y + p * p * endPos.y;
+    const z = u * u * startPos.z + 2 * u * p * cp.z + p * p * endPos.z;
+
+    pos[i * 3] = x;
+    pos[i * 3 + 1] = y;
+    pos[i * 3 + 2] = z;
+  }
+  particleGeo.attributes.position.needsUpdate = true;
+
+  // Gentle drift on the haze
+  haze.rotation.y += 0.0005;
+
+  renderer.render(scene, camera);
+}
+
+// Kick off
+resize();
+animate();
+</script>
+
+<script src="/assets/js/main.js"></script>
+</body>
+</html>
