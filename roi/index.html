@@ -6,69 +6,59 @@
 <title>DOVA ROI Calculator — See Your Savings | D.O.V.A.</title>
 <meta name="description" content="Calculate how much your team wastes on physical key management. See DOVA's ROI for dealerships and fleets.">
 <link rel="stylesheet" href="/assets/css/styles.css">
-<link rel="icon" type="image/svg+xml" href="/assets/images/dova_inline_badge.svg">
+<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
 </head>
 <body>
 
-<div class="announcement-bar">
-  <img src="/assets/images/dova_announcement_bar.svg" alt="DOVA — Patent Pending">
+<div class="announce-bar">
+  <div class="ab-left"><span class="ab-brand">D.O.V.A.</span><span class="ab-badge">PATENT PENDING</span><span class="ab-tagline">Digital Orchestration of Vehicle Authorization</span></div>
+  <div class="ab-right"><a href="mailto:info@dovausa.com">info@dovausa.com</a>&nbsp;·&nbsp;(713) 255-2172</div>
 </div>
 
 <nav class="nav" aria-label="Primary">
-  <div class="nav-inner">
-    <a class="nav-logo" href="/">D.O.V.A.</a>
-    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
-    <ul class="nav-links">
-      <li><a href="/how-it-works/">How It Works</a></li>
-      <li><a href="/product/">Product</a></li>
-      <li><a href="/features/">Features</a></li>
-      <li class="dropdown">
-        <a href="/solutions/">Solutions</a>
-        <ul class="dropdown-menu">
-          <li><a href="/solutions/dealerships/">For Dealerships</a></li>
-          <li><a href="/solutions/fleet/">For Fleet Operators</a></li>
-          <li><a href="/post-sale/">Post-Sale Options</a></li>
-        </ul>
-      </li>
-      <li><a href="/contact/">Contact</a></li>
-      <li><a class="nav-cta" href="/contact/">Book a Demo</a></li>
-    </ul>
-  </div>
+  <a href="/" class="nav-logo"><span class="logo-box"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L21 8l-3-3"/></svg></span>D.O.V.A.</a>
+  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
+  <ul class="nav-links">
+    <li><a href="/how-it-works/">How It Works</a></li>
+    <li><a href="/product/">Product</a></li>
+    <li><a href="/features/">Features</a></li>
+    <li class="dropdown"><a href="/solutions/">Solutions</a><ul class="dropdown-menu"><li><a href="/solutions/dealerships/">For Dealerships</a></li><li><a href="/solutions/fleet/">For Fleet Operators</a></li><li><a href="/post-sale/">Post-Sale Options</a></li><li><a href="/roi/">ROI Calculator</a></li></ul></li>
+    <li><a href="/roi/">ROI</a></li>
+    <li><a href="/contact/">Contact</a></li>
+    <li><a class="nav-cta" href="/contact/">Book a Demo</a></li>
+  </ul>
 </nav>
 
-<header class="hero">
-  <div class="container hero-inner">
-    <h1>DOVA Pays for Itself. Fast.</h1>
-    <p class="lead">The ROI isn't just time. It's accountability, protection, and disputes that never happen.</p>
-  </div>
-</header>
+<section class="hero compact">
+  <div class="hero-dots"></div><div class="hero-vignette"></div><div class="hero-glow"></div>
+  <div class="hero-badge"><span class="pulse-dot"></span>Run the Numbers</div>
+  <h1 class="hero-h1">DOVA Pays for Itself.<br><span class="grad-text">Fast.</span></h1>
+  <p class="hero-sub">The ROI isn't just time. It's accountability, protection, and disputes that never happen.</p>
+</section>
 
-<section class="section">
-  <div class="container" style="max-width: 920px;">
-    <div class="section-head" style="text-align: left;">
-      <span class="sublabel">The Time Cost</span>
-      <h2>18 Minutes. Every Vehicle. Every Day.</h2>
-    </div>
-    <p>Industry data shows the average commercial fleet or dealership team wastes 18 minutes per vehicle access event — locating keys, signing out, chasing approvals, returning keys. At a dealership with 50 vehicle interactions a day, that's 15 hours of labor lost daily. DOVA eliminates that entirely.</p>
+<section class="section white">
+  <div class="inner-narrow">
+    <div class="eyebrow">The Time Cost</div>
+    <h2 class="s-h2">18 Minutes. Every Vehicle.<br><span class="acc">Every Day.</span></h2>
+    <p class="s-body" style="font-size: 17px;">Industry data shows the average commercial fleet or dealership team wastes 18 minutes per vehicle access event — locating keys, signing out, chasing approvals, returning keys. At a dealership with 50 vehicle interactions a day, that's 15 hours of labor lost daily. DOVA eliminates that entirely.</p>
   </div>
 </section>
 
-<section class="section-tight" style="background: var(--bg-alt);">
-  <div class="container">
-    <div class="section-head">
-      <h2>Build Your Own Savings Estimate</h2>
-      <p class="lead">Adjust the three inputs below. The math updates live.</p>
-    </div>
+<section class="section alt">
+  <div class="inner">
+    <div class="eyebrow centered" style="justify-content: center;">Build Your Estimate</div>
+    <h2 class="s-h2 center">Build Your Own <span class="acc">Savings Estimate.</span></h2>
+    <p class="s-body centered">Adjust the three inputs below. The math updates live.</p>
 
-    <div class="roi-calc">
+    <div class="roi-card">
       <div class="roi-grid">
         <div class="roi-field">
-          <label for="roi-team-size">Team Size (number of staff who access vehicles)</label>
-          <input id="roi-team-size" type="number" min="1" value="10">
+          <label for="roi-team">Team Size</label>
+          <input id="roi-team" type="number" min="1" value="10">
         </div>
         <div class="roi-field">
-          <label for="roi-vehicles-per-day">Vehicle Accesses Per Person Per Day</label>
-          <input id="roi-vehicles-per-day" type="number" min="1" value="5">
+          <label for="roi-vpd">Vehicle Accesses / Person / Day</label>
+          <input id="roi-vpd" type="number" min="1" value="5">
         </div>
         <div class="roi-field" style="grid-column: 1 / -1;">
           <label for="roi-rate">Average Employee Hourly Rate (USD)</label>
@@ -77,21 +67,20 @@
       </div>
 
       <div class="roi-result">
-        <div class="savings-label">Estimated Monthly Savings</div>
-        <div class="savings-value" id="roi-monthly">$0</div>
-        <div class="savings-sub" id="roi-hours">0 hours / day saved</div>
+        <div class="label">Estimated Monthly Savings</div>
+        <div class="value" id="roi-monthly">$0</div>
+        <div class="sub" id="roi-hours">0 hours / day saved</div>
       </div>
     </div>
-    <p class="muted text-center" style="font-size: 0.86rem; max-width: 640px; margin: 16px auto 0;">Calculation: team size &times; vehicle accesses per person &times; 18 minutes &times; 22 working days &times; hourly rate. Estimate only; your actual savings depend on operational mix.</p>
+    <p class="muted center" style="font-size: 13px; max-width: 720px; margin: 18px auto 0;">Calculation: team size &times; vehicle accesses per person &times; 18 minutes &times; 22 working days &times; hourly rate. Estimate only; actual savings depend on operational mix.</p>
   </div>
 </section>
 
-<section class="section">
-  <div class="container" style="max-width: 920px;">
-    <div class="section-head" style="text-align: left;">
-      <h2>Beyond Time — The Hidden Costs DOVA Eliminates</h2>
-    </div>
-    <ul class="check-list">
+<section class="section white">
+  <div class="inner-narrow">
+    <div class="eyebrow">Beyond Time</div>
+    <h2 class="s-h2">The Hidden Costs<br>DOVA <span class="acc">Eliminates.</span></h2>
+    <ul class="check-list single-col" style="margin-top: 28px;">
       <li>Insurance disputes with no documentation — resolved with a cryptographic record</li>
       <li>Key replacement costs ($200–$500 per vehicle key) — eliminated</li>
       <li>Unauthorized vehicle use — prevented at the hardware level, before it happens</li>
@@ -102,44 +91,24 @@
   </div>
 </section>
 
-<section class="cta-strip">
-  <div class="container">
-    <h2>Run the numbers on your operation.</h2>
-    <a href="/contact/" class="btn btn-primary">Talk to Sales</a>
-  </div>
+<section class="b-cta">
+  <div class="b-cta-glow"></div><div class="b-cta-dots"></div>
+  <div class="eyebrow centered">See It On Your Numbers</div>
+  <h2 class="s-h2">Run the numbers<br>on your operation.</h2>
+  <div class="btn-row"><a href="/contact/" class="btn-p-w">Talk to Sales</a></div>
 </section>
 
 <footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <span class="logo">D.O.V.A.</span>
-        <div class="tagline">Smarter, Safer Vehicle Access</div>
-        <img class="badge" src="/assets/images/dova_footer_badge.svg" alt="DOVA Patent Pending Badge">
-      </div>
-      <div class="footer-col">
-        <h5>Site</h5>
-        <ul>
-          <li><a href="/how-it-works/">How It Works</a></li>
-          <li><a href="/product/">Product</a></li>
-          <li><a href="/features/">Features</a></li>
-          <li><a href="/solutions/">Solutions</a></li>
-          <li><a href="/contact/">Contact</a></li>
-        </ul>
-      </div>
-      <div class="footer-col">
-        <h5>Contact</h5>
-        <ul>
-          <li><a href="mailto:info@dovausa.com">info@dovausa.com</a></li>
-          <li><a href="tel:+17132552172">(713) 255-2172</a></li>
-          <li><a href="https://dovausa.com">dovausa.com</a></li>
-        </ul>
-      </div>
+  <div class="footer-grid">
+    <div>
+      <div class="f-logo"><span class="logo-box"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L21 8l-3-3"/></svg></span>D.O.V.A., LLC</div>
+      <div class="f-tag">Smarter, Safer Vehicle Access</div>
+      <div class="f-contact"><a href="mailto:info@dovausa.com">info@dovausa.com</a><a href="tel:+17132552172">(713) 255-2172</a><a href="https://dovausa.com">dovausa.com</a></div>
     </div>
-    <div class="footer-bottom">
-      <div>&copy; D.O.V.A., LLC 2026. All Rights Reserved.<span class="sep">|</span>Patent Pending<span class="sep">|</span>San Antonio, Texas</div>
-    </div>
+    <div class="f-col"><h4>Platform</h4><a href="/how-it-works/">How It Works</a><a href="/product/">Product</a><a href="/features/">Features</a><a href="/post-sale/">Post-Sale Options</a></div>
+    <div class="f-col"><h4>Solutions</h4><a href="/solutions/dealerships/">For Dealerships</a><a href="/solutions/fleet/">For Fleet Operators</a><a href="/roi/">ROI Calculator</a><a href="/contact/">Book a Demo</a></div>
   </div>
+  <div class="f-bottom"><p>&copy; D.O.V.A., LLC 2026. All Rights Reserved. &middot; San Antonio, Texas</p><div class="f-pills"><span class="f-pill">Patent Pending</span><span class="f-pill">&copy; 2026</span></div></div>
 </footer>
 
 <script src="/assets/js/main.js"></script>
