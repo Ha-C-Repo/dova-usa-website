@@ -2054,3 +2054,43 @@ textarea:focus-visible {
 .stats-bar .stat-l {
   color: rgba(232, 241, 250, 0.62);
 }
+/* ============================================================
+   Hero text legibility fix (DOVA-2026-PROD-003 hotfix)
+   - H1 was cyan-gradient on all 3 lines; merged with the cyan cloud at acts 3-5
+   - Now: pure white text on first two lines, cyan accent only on the third line
+   - Left-side dark scrim under the text so the cloud bloom never washes out copy
+   ============================================================ */
+.imm2-h1 .gradline {
+  color: #ffffff;
+  background: none;
+  -webkit-background-clip: initial;
+  background-clip: initial;
+  -webkit-text-fill-color: #ffffff;
+  text-shadow: 0 2px 24px rgba(5, 14, 28, 0.55);
+}
+/* Subtle cyan accent on the LAST gradient-line of each H1 act (e.g. ".Real Time." / "Permanent." / "Verifiable." / "Online." / "Access.") */
+.imm2-h1 .gradline:last-child {
+  background: linear-gradient(95deg, #ffffff 0%, #67C8FF 70%, #00D1F3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Left-side scrim so text always reads on top of the bloom */
+.imm2-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 56%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+    rgba(5, 14, 28, 0.62) 0%,
+    rgba(5, 14, 28, 0.42) 40%,
+    rgba(5, 14, 28, 0.00) 100%);
+}
+@media (max-width: 699px) {
+  .imm2-hero::after { width: 100%; }
+}
+.imm2-text { z-index: 5; }

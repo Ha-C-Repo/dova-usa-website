@@ -62,7 +62,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
   // === HDR environment ===
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envScene = new RoomEnvironment(renderer);
-  const envTexture = pmrem.fromScene(envScene, 0.15).texture;
+  const envTexture = pmrem.fromScene(envScene, 0.04).texture;
   scene.environment = envTexture;
   envScene.children.forEach(c => { if (c.material) c.material.dispose(); });
 
@@ -92,7 +92,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     color: 0x0C0F14, metalness: 0.15, roughness: 0.78, envMapIntensity: 0.4
   });
   const cyanGlow = new THREE.MeshStandardMaterial({
-    color: CYAN, emissive: CYAN, emissiveIntensity: 2.2, metalness: 0.0, roughness: 0.4
+    color: CYAN, emissive: CYAN, emissiveIntensity: 1.4, metalness: 0.0, roughness: 0.4
   });
   const cyanRingMat = new THREE.MeshBasicMaterial({ color: CYAN, transparent: true, opacity: 0.9 });
   const wireframeShell = new THREE.MeshBasicMaterial({
@@ -216,20 +216,20 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
   cloudGroup.position.set(3.2, 1.2, -1.0);
 
   const cloudCore = new THREE.Mesh(
-    new THREE.IcosahedronGeometry(0.55, 2),
+    new THREE.IcosahedronGeometry(0.42, 2),
     new THREE.MeshStandardMaterial({
-      color: CYAN, emissive: CYAN, emissiveIntensity: 1.6,
+      color: CYAN, emissive: CYAN, emissiveIntensity: 0.85,
       metalness: 0.0, roughness: 0.5, transparent: true, opacity: 0.85
     })
   );
   cloudGroup.add(cloudCore);
 
-  cloudGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(0.78, 1), wireframeShell));
+  cloudGroup.add(new THREE.Mesh(new THREE.IcosahedronGeometry(0.6, 1), wireframeShell));
 
   const gates = [];
   for (let i = 0; i < 3; i++) {
     const ring = new THREE.Mesh(
-      new THREE.TorusGeometry(0.95 + i * 0.08, 0.008, 8, 80),
+      new THREE.TorusGeometry(0.72 + i * 0.06, 0.006, 8, 80),
       new THREE.MeshBasicMaterial({
         color: i === 0 ? 0x1A9FD0 : (i === 1 ? 0x2FBAE0 : 0x4FC9E8),
         transparent: true, opacity: 0.85
@@ -263,7 +263,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
   composer.addPass(new RenderPass(scene, camera));
   const bloomPass = new UnrealBloomPass(
     new THREE.Vector2(stageRect.width, stageRect.height),
-    (window.innerWidth >= 960 ? 0.85 : 0.6), 0.9, 0.78
+    (window.innerWidth >= 960 ? 0.42 : 0.3), 0.85, 0.85
   );
   composer.addPass(bloomPass);
   composer.addPass(new OutputPass());
@@ -274,37 +274,37 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
   const keyframes = [
     { // ACT 1 - Install. Module floats above the dashboard, port visible.
       camPos: [2.0, 1.5, 3.6], camLook: [0, 0.4, 0],
-      moduleY: 1.15, cloudIntensity: 0.6, label: 'Install',
+      moduleY: 1.15, cloudIntensity: 0.5, label: 'Install',
       line1: 'Smarter,', line2: 'Safer Vehicle', line3: 'Access.',
       sub: 'The only cloud-connected OBD-II platform that works on every U.S. vehicle since 1996. No OEM agreements, no lockboxes, no lost keys.'
     },
     { // ACT 2 - Enroll. Module seats into the port. VIN handshake.
       camPos: [1.1, 0.85, 2.3], camLook: [0, 0.22, 0],
-      moduleY: 0.32, cloudIntensity: 1.0, label: 'Enroll',
+      moduleY: 0.32, cloudIntensity: 0.85, label: 'Enroll',
       line1: 'Plug In.', line2: 'VIN Handshake.', line3: 'Online.',
       sub: 'A thirty-second install. The module joins the cloud authorization engine. The vehicle is now part of your fleet.'
     },
     { // ACT 3 - Authorize. Pull back, data flow visible toward cloud.
       camPos: [2.5, 1.55, 2.95], camLook: [1.2, 0.85, -0.3],
-      moduleY: 0.32, cloudIntensity: 1.6, label: 'Authorize',
+      moduleY: 0.32, cloudIntensity: 1.15, label: 'Authorize',
       line1: 'Three Gates.', line2: 'Cloud Mediated.', line3: 'Verifiable.',
       sub: 'Every start, every door, every shift authorized at the platform layer. The patent-pending architecture closes the gaps lockboxes leave open.'
     },
     { // ACT 4 - Audit. Camera frames the cloud sphere. Particle stream peaks.
       camPos: [3.4, 1.45, 1.6], camLook: [2.9, 1.0, -0.7],
-      moduleY: 0.32, cloudIntensity: 2.0, label: 'Audit',
+      moduleY: 0.32, cloudIntensity: 1.35, label: 'Audit',
       line1: 'Every Access.', line2: 'Cryptographic.', line3: 'Permanent.',
       sub: 'Each authorization is bound to a real-time diagnostic snapshot. Write-once, tamper-evident, legally admissible.'
     },
     { // ACT 5 - Network. Wide pull-back shows module-cloud-fleet relationship.
       camPos: [4.2, 2.1, 2.2], camLook: [2.4, 1.1, -0.6],
-      moduleY: 0.32, cloudIntensity: 2.5, label: 'Network',
+      moduleY: 0.32, cloudIntensity: 1.15, label: 'Network',
       line1: 'Every Vehicle.', line2: 'One Network.', line3: 'Real Time.',
       sub: 'Multiple makes, multiple model years, every vehicle on one cloud authorization engine. Fleets unified.'
     },
     { // ACT 6 - Outcome. Final hero framing, slight orbit, all subsystems lit.
       camPos: [2.6, 1.3, 4.0], camLook: [0.6, 0.5, -0.2],
-      moduleY: 0.32, cloudIntensity: 2.2, label: 'Outcome',
+      moduleY: 0.32, cloudIntensity: 1.5, label: 'Outcome',
       line1: 'Smarter,', line2: 'Safer Vehicle', line3: 'Access.',
       sub: 'Identity verified. Vehicle authorized. Diagnostic recorded. The full DOVA loop, on every vehicle you operate.'
     }
