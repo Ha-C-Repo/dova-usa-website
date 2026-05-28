@@ -715,13 +715,19 @@ button { font-family: inherit; cursor: pointer; }
 .step-num {
   font-family: var(--syne);
   font-weight: 800;
-  font-size: 44px;
-  background: linear-gradient(135deg, var(--blue), var(--cyan));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-size: 22px;
+  background: linear-gradient(135deg, #1A7FE8 0%, #00C8E8 100%);
+  color: #FFFFFF;
+  -webkit-text-fill-color: #FFFFFF;
   line-height: 1;
-  letter-spacing: -0.02em;
+  width: 72px;
+  height: 72px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 22px rgba(0, 170, 204, 0.32), inset 0 1px 0 rgba(255,255,255,0.25);
+  letter-spacing: -0.5px;
 }
 .step-content h3 {
   font-family: var(--syne);
