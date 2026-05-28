@@ -85,6 +85,8 @@
     requestAnimationFrame(frame);
   }
   document.querySelectorAll('.stat-n').forEach(el => {
+    // Skip elements explicitly marked as static (years, labels, etc.)
+    if (el.dataset.noCount === 'true') return;
     // Read the displayed number, treat as the target
     const raw = (el.firstChild && el.firstChild.nodeType === 3) ? el.firstChild.nodeValue : el.textContent;
     const m = raw && raw.match(/(\d[\d,]*)/);
