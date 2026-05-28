@@ -226,9 +226,19 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     inner.quadraticCurveTo(-iw, -ih, -iw + ir, -ih);
     bezelShape.holes.push(inner);
   })();
+  // Brushed aluminum surface texture generated via Google AI Studio
+  // (Nano Banana 2, gemini-3.1-flash-image). 1024 x 1024 base color map.
+  const bezelTex = new THREE.TextureLoader().load('/assets/textures/bezel-brushed.jpg');
+  bezelTex.wrapS = bezelTex.wrapT = THREE.RepeatWrapping;
+  bezelTex.colorSpace = THREE.SRGBColorSpace;
+  bezelTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
   const bezelMat = new THREE.MeshPhysicalMaterial({
-    color: 0xC0C8D2, metalness: 1.0, roughness: 0.24,
-    clearcoat: 0.7, clearcoatRoughness: 0.12, envMapIntensity: 1.4
+    color: 0xFFFFFF,
+    map: bezelTex,
+    bumpMap: bezelTex,
+    bumpScale: 0.015,
+    metalness: 1.0, roughness: 0.30,
+    clearcoat: 0.7, clearcoatRoughness: 0.12, envMapIntensity: 1.5
   });
   const bezelGeo = new THREE.ExtrudeGeometry(bezelShape, {
     depth: 0.014, bevelEnabled: true,
