@@ -87,11 +87,13 @@
   .imm-h1 {
     font-family: 'Syne', sans-serif;
     font-weight: 800;
-    font-size: clamp(56px, 6.5vw, 96px);
-    line-height: 0.96;
-    letter-spacing: -0.025em;
+    font-size: clamp(44px, 4.8vw, 76px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
     color: #07192E;
     margin: 0 0 28px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
   .imm-h1 .gradline {
     background: linear-gradient(95deg, #1A7FE8 0%, #00AACC 100%);
@@ -548,12 +550,15 @@
   const heroSection = document.getElementById('immHero');
 
   // Image crossfade timeline (driven by scroll over the hero section)
+  // Pin the hero so the three keyframe states play in place before scroll moves on
   ScrollTrigger.create({
     trigger: heroSection,
     start: 'top top',
-    end: '+=180%',
-    scrub: 0.6,
-    pin: false,
+    end: '+=220%',
+    scrub: 0.8,
+    pin: true,
+    pinSpacing: true,
+    anticipatePin: 1,
     onUpdate: (self) => {
       const p = self.progress;
       // Phase 1: frame1 dominant, slow zoom-out (0 to 0.4)
@@ -580,17 +585,7 @@
     }
   });
 
-  // Hero text parallax (subtle)
-  ScrollTrigger.create({
-    trigger: heroSection,
-    start: 'top top',
-    end: 'bottom top',
-    scrub: 1,
-    onUpdate: (self) => {
-      const p = self.progress;
-      gsap.set('.imm-text', { y: p * -40, opacity: 1 - p * 0.3 });
-    }
-  });
+  // (text parallax removed — would conflict with hero pin)
 
   // ===== 2D canvas particle field over the image stage =====
   const canvas = document.getElementById('particles');
