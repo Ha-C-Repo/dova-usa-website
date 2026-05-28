@@ -87,13 +87,14 @@
   .imm-h1 {
     font-family: 'Syne', sans-serif;
     font-weight: 800;
-    font-size: clamp(44px, 4.8vw, 76px);
-    line-height: 1.02;
+    font-size: clamp(42px, 4.5vw, 70px);
+    line-height: 1.04;
     letter-spacing: -0.02em;
     color: #07192E;
     margin: 0 0 28px;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
+    hyphens: none;
+    word-break: keep-all;
+    overflow-wrap: normal;
   }
   .imm-h1 .gradline {
     background: linear-gradient(95deg, #1A7FE8 0%, #00AACC 100%);
@@ -517,7 +518,7 @@
     {
       label: 'Authorize',
       line1: 'Three Gates.',
-      line2: 'Cloud-Mediated.',
+      line2: 'Cloud Mediated.',
       line3: 'Verifiable.',
       sub: 'Every start, every door, every shift authorized at the platform layer. The patent-pending architecture closes the gaps lockboxes leave open.'
     }
