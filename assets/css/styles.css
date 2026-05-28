@@ -1602,3 +1602,286 @@ textarea:focus-visible {
   position: relative;
   z-index: 2;
 }
+
+/* ============================================================
+   Phase 5 Session 1 (DOVA-2026-PROD-003)
+   Dark full-bleed hero, designed top banner, branded loader,
+   custom cursor, line reveals, count-up tickers,
+   postprocessing read-through, micro-interactions.
+   ============================================================ */
+
+/* --- Dark mode token additions --- */
+:root {
+  --navy-deep:  #050E1C;
+  --navy-mid:   #0A1A30;
+  --text-light: #E8F1FA;
+  --text-muted-light: #8FA8C4;
+}
+
+/* --- 5a. Dark full-bleed hero --- */
+.imm2-hero {
+  /* override the light gradient and 2-column layout */
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  min-height: 720px;
+  padding: 0;
+  background: var(--navy-deep);
+  overflow: hidden;
+}
+.imm2-stage {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  z-index: 1;
+}
+#scene3d {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+.imm2-text {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  left: 64px;
+  transform: translateY(-50%);
+  max-width: 620px;
+  pointer-events: none;
+}
+.imm2-text > * { pointer-events: auto; }
+.imm2-h1 { color: var(--text-light); }
+.imm2-h1 .gradline {
+  background: linear-gradient(95deg, #5FB8F5 0%, #00D1F3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.imm2-sub {
+  color: var(--text-muted-light);
+}
+.imm2-eyebrow {
+  color: #67C8FF;
+  background: rgba(0, 170, 204, 0.10);
+  border: 1px solid rgba(0, 170, 204, 0.20);
+}
+.imm2-btn-s {
+  color: var(--text-light);
+  border-color: rgba(232, 241, 250, 0.30);
+}
+.imm2-btn-s:hover { color: #67C8FF; border-color: #67C8FF; }
+.imm2-stage-fallback {
+  /* hide fallback on desktop; the dark scene handles it */
+  position: absolute; inset: 0;
+}
+.imm2-step-label { color: #67C8FF; }
+.imm2-step-dots span { background: rgba(232, 241, 250, 0.25); }
+.imm2-step-dots span.active { background: #00D1F3; box-shadow: 0 0 12px rgba(0, 209, 243, 0.55); }
+.imm2-steps { color: rgba(232, 241, 250, 0.55); }
+.imm2-loading {
+  background: var(--navy-deep);
+}
+
+/* --- 5b. Designed top banner: thin scroll-progress bar + pill --- */
+.announce-bar {
+  background: var(--navy-deep);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: var(--text-light);
+  position: relative;
+}
+.announce-bar::after {
+  content: '';
+  position: absolute; left: 0; bottom: -1px;
+  height: 2px;
+  width: var(--scroll-progress, 0%);
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  transition: width 0.08s linear;
+  box-shadow: 0 0 12px rgba(0, 170, 204, 0.45);
+}
+.ab-brand { color: var(--text-light); }
+.ab-tagline { color: var(--text-muted-light); }
+.ab-right a { color: var(--text-light); }
+.ab-right a:hover { color: var(--cyan); }
+
+/* nav contrast on dark */
+.nav {
+  background: rgba(7, 25, 46, 0.62);
+  backdrop-filter: saturate(160%) blur(12px);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  border-bottom: 1px solid rgba(232, 241, 250, 0.05);
+}
+.nav-logo { color: var(--text-light); }
+.nav-links > li > a { color: rgba(232, 241, 250, 0.85); }
+.nav-links > li > a:hover { color: #67C8FF; }
+.nav-cta {
+  background: linear-gradient(95deg, var(--blue), var(--cyan));
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 18px;
+}
+
+/* --- 5c. Branded loading moment --- */
+.imm2-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+.imm2-loading-ring {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 2px solid rgba(0, 209, 243, 0.18);
+  border-top-color: #00D1F3;
+  animation: imm2-ring-spin 0.95s linear infinite;
+  box-shadow: 0 0 36px rgba(0, 209, 243, 0.25);
+}
+.imm2-loading-label {
+  font-family: var(--syne);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: rgba(232, 241, 250, 0.55);
+}
+@keyframes imm2-ring-spin {
+  to { transform: rotate(360deg); }
+}
+.imm2-loading.gone .imm2-loading-ring,
+.imm2-loading.gone .imm2-loading-label,
+.imm2-loading.gone .imm2-loading-dot { opacity: 0; }
+.imm2-loading-dot { display: none; }
+
+/* --- 5d. Custom cursor --- */
+@media (hover: hover) and (pointer: fine) {
+  html, body { cursor: none; }
+  a, button, .magnetic, .spotlight, [role=button] { cursor: none; }
+}
+#dova-cursor {
+  position: fixed;
+  top: 0; left: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid #67C8FF;
+  pointer-events: none;
+  z-index: 9999;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: width 0.22s cubic-bezier(0.2,0.8,0.2,1),
+              height 0.22s cubic-bezier(0.2,0.8,0.2,1),
+              background-color 0.22s ease,
+              border-color 0.22s ease;
+  will-change: transform;
+}
+#dova-cursor.is-hover {
+  width: 40px;
+  height: 40px;
+  background: rgba(103, 200, 255, 0.08);
+}
+#dova-cursor.is-press {
+  width: 32px;
+  height: 32px;
+  background: rgba(103, 200, 255, 0.18);
+}
+@media (prefers-reduced-motion: reduce) {
+  html, body { cursor: auto !important; }
+  #dova-cursor { display: none; }
+}
+
+/* --- 5f. SplitText reveals (vanilla, no plugin) --- */
+.reveal-line {
+  display: block;
+  overflow: hidden;
+}
+.reveal-line > span {
+  display: inline-block;
+  transform: translateY(110%);
+  opacity: 0;
+  transition: transform 0.85s cubic-bezier(0.2,0.8,0.2,1), opacity 0.5s ease;
+}
+.reveal-line.is-in > span {
+  transform: translateY(0%);
+  opacity: 1;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-line > span { transform: none; opacity: 1; transition: none; }
+}
+
+/* --- 5g. Count-up ticker styling --- */
+.stat-n.is-counting { color: var(--cyan); }
+.stat-n[data-target] { transition: color 0.3s; }
+
+/* --- 5n. Micro-interactions audit --- */
+.aud-card {
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+.aud-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(26, 127, 232, 0.12);
+}
+.d-card {
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1),
+              box-shadow 0.3s ease;
+}
+.d-card:hover {
+  transform: translateY(-4px);
+}
+.btn-p, .imm2-btn-p, .btn-p-w {
+  position: relative;
+  overflow: hidden;
+}
+.btn-p::before, .imm2-btn-p::before, .btn-p-w::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(95deg, var(--cyan), var(--blue));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 0;
+}
+.btn-p:hover::before, .imm2-btn-p:hover::before, .btn-p-w:hover::before {
+  opacity: 1;
+}
+.btn-p > *, .imm2-btn-p > *, .btn-p-w > * { position: relative; z-index: 1; }
+.btn-p:active, .imm2-btn-p:active, .btn-p-w:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+/* nav-links underline on dark - re-define with adjusted color */
+@media (hover: hover) {
+  .nav-links > li > a:not(.nav-cta)::after {
+    background: linear-gradient(95deg, #67C8FF, #00D1F3);
+  }
+}
+
+/* form inputs micro-interactions */
+.contact-form-card input,
+.contact-form-card textarea,
+.contact-form-card select {
+  transition: border-color 0.25s, box-shadow 0.25s;
+}
+.contact-form-card input:focus,
+.contact-form-card textarea:focus,
+.contact-form-card select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(26, 127, 232, 0.15);
+  outline: none;
+}
+
+/* Make hero stage-fallback invisible on desktop dark hero */
+@media (min-width: 961px) {
+  .imm2-stage-fallback { display: none; }
+}
+
+/* Recalibrate light secondary sections to NOT clash with dark hero */
+.stats-bar {
+  background: linear-gradient(180deg, var(--navy-deep) 0%, var(--bg) 60%);
+  padding-top: 80px;
+}

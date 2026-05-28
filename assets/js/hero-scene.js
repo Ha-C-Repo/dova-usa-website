@@ -52,7 +52,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   });
   renderer.setSize(stageRect.width, stageRect.height, false);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-  renderer.setClearColor(0xC2D6E8, 1);
+  renderer.setClearColor(0x050E1C, 1);
   renderer.toneMapping = THREE.LinearToneMapping;
   renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -65,8 +65,8 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   envScene.children.forEach(c => { if (c.material) c.material.dispose(); });
 
   // === Lights ===
-  scene.add(new THREE.HemisphereLight(0xFFFFFF, 0xB8CCE0, 0.6));
-  const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.6); keyLight.position.set(3, 5, 4); scene.add(keyLight);
+  scene.add(new THREE.HemisphereLight(0x4A88D6, 0x0A1A30, 0.42));
+  const keyLight = new THREE.DirectionalLight(0xE0F0FF, 1.3); keyLight.position.set(3, 5, 4); scene.add(keyLight);
   const fillLight = new THREE.DirectionalLight(0xCFE4F4, 0.6); fillLight.position.set(-4, 2, 3); scene.add(fillLight);
   const rimLight = new THREE.PointLight(0x4FC9E8, 2.5, 14); rimLight.position.set(-2.5, 2.5, -2); scene.add(rimLight);
   const cloudFillLight = new THREE.PointLight(0x66D9F0, 1.5, 8); cloudFillLight.position.set(3.2, 1.5, -0.5); scene.add(cloudFillLight);
@@ -90,7 +90,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
     color: 0x0C0F14, metalness: 0.15, roughness: 0.78, envMapIntensity: 0.4
   });
   const cyanGlow = new THREE.MeshStandardMaterial({
-    color: CYAN, emissive: CYAN, emissiveIntensity: 1.4, metalness: 0.0, roughness: 0.4
+    color: CYAN, emissive: CYAN, emissiveIntensity: 2.2, metalness: 0.0, roughness: 0.4
   });
   const cyanRingMat = new THREE.MeshBasicMaterial({ color: CYAN, transparent: true, opacity: 0.9 });
   const wireframeShell = new THREE.MeshBasicMaterial({
@@ -101,7 +101,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   const dashGroup = new THREE.Group();
   const dashFloor = new THREE.Mesh(
     new THREE.CircleGeometry(8, 64),
-    new THREE.MeshStandardMaterial({ color: 0xEAF1F8, metalness: 0.0, roughness: 0.95 })
+    new THREE.MeshStandardMaterial({ color: 0x081427, metalness: 0.0, roughness: 0.85 })
   );
   dashFloor.rotation.x = -Math.PI / 2;
   dashFloor.position.y = -0.4;
@@ -190,7 +190,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   const cloudCore = new THREE.Mesh(
     new THREE.IcosahedronGeometry(0.55, 2),
     new THREE.MeshStandardMaterial({
-      color: CYAN, emissive: CYAN, emissiveIntensity: 0.9,
+      color: CYAN, emissive: CYAN, emissiveIntensity: 1.6,
       metalness: 0.0, roughness: 0.5, transparent: true, opacity: 0.85
     })
   );
@@ -235,7 +235,7 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   composer.addPass(new RenderPass(scene, camera));
   const bloomPass = new UnrealBloomPass(
     new THREE.Vector2(stageRect.width, stageRect.height),
-    0.55, 0.85, 0.92
+    0.85, 0.9, 0.78
   );
   composer.addPass(bloomPass);
   composer.addPass(new OutputPass());
