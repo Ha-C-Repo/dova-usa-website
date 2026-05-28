@@ -452,12 +452,12 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
       // Adaptive pin: full multi-act only on wider viewports.
       const isWide = window.innerWidth >= 960;
       const isCompact = window.innerWidth >= 700 && window.innerWidth < 960;
-      const pinEnd = isWide ? '+=500%' : (isCompact ? '+=240%' : '+=120%');
+      const pinEnd = isWide ? '+=300%' : (isCompact ? '+=180%' : '+=100%');
       window.ScrollTrigger.create({
         trigger: heroSection,
         start: 'top top',
         end: pinEnd,
-        scrub: 0.8,
+        scrub: 0.4,
         pin: isWide || isCompact,
         pinSpacing: isWide || isCompact,
         anticipatePin: 1,

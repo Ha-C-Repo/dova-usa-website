@@ -2026,3 +2026,31 @@ textarea:focus-visible {
   .cinematic-bed-fallback { animation: none; }
   .cinematic-bed-video { transition: none; }
 }
+/* ============================================================
+   Stats-bar contrast fix (DOVA-2026-PROD-003 hotfix)
+   ============================================================ */
+.stats-bar {
+  background: var(--navy-deep);
+  padding: 64px 40px;
+  border-bottom: 1px solid rgba(232, 241, 250, 0.06);
+}
+.stats-bar .stat-cell {
+  background: transparent;
+}
+.stats-bar .stat-n {
+  color: var(--text-light) !important;
+  font-family: var(--syne);
+  font-weight: 800;
+}
+.stats-bar .stat-n .hi {
+  background: linear-gradient(95deg, #5FB8F5 0%, #00D1F3 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.stats-bar .stat-n.is-counting {
+  color: #67C8FF !important;
+}
+.stats-bar .stat-l {
+  color: rgba(232, 241, 250, 0.62);
+}
