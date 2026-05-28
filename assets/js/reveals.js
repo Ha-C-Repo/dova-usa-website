@@ -32,7 +32,7 @@
   }
 
   // Apply to H1, H2, eyebrows
-  const headings = document.querySelectorAll('.imm2-h1 .gradline, h2.s-h2, .eyebrow, .imm2-eyebrow, .hero-h1, .hero-sub, .imm2-sub');
+  const headings = document.querySelectorAll('h2.s-h2, .eyebrow, .imm2-eyebrow, .hero-sub, .imm2-sub');
   headings.forEach(splitIntoLines);
 
   // IntersectionObserver to trigger reveal
@@ -46,6 +46,15 @@
       });
     }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
     document.querySelectorAll('.reveal-line').forEach(el => io.observe(el));
+    // Safety net: after 1.8s, force is-in on any reveal-line still hidden.
+    setTimeout(() => {
+      document.querySelectorAll('.reveal-line:not(.is-in)').forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) {
+          el.classList.add('is-in');
+        }
+      });
+    }, 1800);
   } else {
     document.querySelectorAll('.reveal-line').forEach(el => el.classList.add('is-in'));
   }
