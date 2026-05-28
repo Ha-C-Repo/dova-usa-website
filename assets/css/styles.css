@@ -356,10 +356,10 @@ button { font-family: inherit; cursor: pointer; }
 }
 .hero-h1 {
   font-family: var(--syne);
-  font-size: clamp(48px, 7vw, 90px);
+  font-size: clamp(40px, 5.4vw, 68px);
   font-weight: 800;
-  line-height: 0.97;
-  letter-spacing: -2.5px;
+  line-height: 1.02;
+  letter-spacing: -1.6px;
   color: var(--navy);
   max-width: 920px;
   margin: 0 auto 10px;
