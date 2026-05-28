@@ -1354,3 +1354,253 @@ button { font-family: inherit; cursor: pointer; }
 .muted { color: var(--muted); }
 .mt-0 { margin-top: 0; }
 .mb-0 { margin-bottom: 0; }
+
+/* ============================================================
+   A11y additions (DOVA-2026-PROD-001 step 4e)
+   ============================================================ */
+.skip-link {
+  position: absolute;
+  left: 8px;
+  top: -40px;
+  background: var(--navy);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-family: var(--dm);
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 1000;
+  text-decoration: none;
+  transition: top 0.15s;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  top: 8px;
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ============================================================
+   Immersive hero (DOVA-2026-PROD-001 step 4h)
+   Three.js scene + scroll-driven camera. ID-namespaced to .imm2-*.
+   ============================================================ */
+.imm2-hero {
+  position: relative;
+  width: 100%;
+  min-height: 92vh;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 56px;
+  padding: 80px 64px 64px;
+  background: linear-gradient(170deg, #FFFFFF 0%, #F4F8FC 60%, #E9F1FA 100%);
+  overflow: hidden;
+  align-items: center;
+}
+.imm2-text { position: relative; z-index: 4; max-width: 580px; }
+.imm2-eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--syne); font-weight: 700; font-size: 11px;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--blue);
+  background: rgba(26, 127, 232, 0.08);
+  padding: 8px 16px; border-radius: 999px; margin-bottom: 28px;
+}
+.imm2-eyebrow .pulse-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 0 0 rgba(0, 170, 204, 0.45);
+  animation: imm2-pulse-dot 1.8s infinite;
+}
+@keyframes imm2-pulse-dot {
+  0%   { box-shadow: 0 0 0 0   rgba(0, 170, 204, 0.45); }
+  70%  { box-shadow: 0 0 0 14px rgba(0, 170, 204, 0); }
+  100% { box-shadow: 0 0 0 0   rgba(0, 170, 204, 0); }
+}
+.imm2-h1 {
+  font-family: var(--syne); font-weight: 800;
+  font-size: clamp(38px, 4.5vw, 70px);
+  line-height: 1.04; letter-spacing: -0.02em;
+  color: var(--navy); margin: 0 0 28px;
+}
+.imm2-h1 .gradline {
+  background: linear-gradient(95deg, var(--blue) 0%, var(--cyan) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent; display: block;
+}
+.imm2-sub {
+  font-family: var(--dm); font-size: 19px; line-height: 1.55;
+  color: #324760; margin: 0 0 36px; max-width: 480px;
+}
+.imm2-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.imm2-btn-p, .imm2-btn-s {
+  font-family: var(--syne); font-weight: 700; font-size: 13px;
+  letter-spacing: 0.5px; text-transform: uppercase;
+  padding: 14px 26px; border-radius: 8px;
+  transition: transform 0.18s, box-shadow 0.18s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.imm2-btn-p {
+  background: linear-gradient(95deg, var(--blue), var(--blue2));
+  color: #fff; box-shadow: var(--shadow-blue);
+}
+.imm2-btn-p:hover { transform: translateY(-2px); }
+.imm2-btn-s {
+  background: transparent; color: var(--navy);
+  border: 1.5px solid var(--border2);
+}
+.imm2-btn-s:hover { border-color: var(--blue); color: var(--blue); }
+.imm2-steps {
+  display: flex; align-items: center; gap: 14px;
+  margin-top: 40px; font-family: var(--dm); font-size: 13px;
+  color: var(--muted);
+}
+.imm2-step-label {
+  font-family: var(--syne); font-weight: 700; font-size: 12px;
+  letter-spacing: 1.5px; text-transform: uppercase; color: var(--blue);
+}
+.imm2-step-dots { display: flex; gap: 8px; }
+.imm2-step-dots span {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border2); transition: background 0.3s, transform 0.3s;
+}
+.imm2-step-dots span.active { background: var(--blue); transform: scale(1.25); }
+
+.imm2-stage {
+  position: relative; width: 100%; height: 88vh;
+  min-height: 520px;
+  display: flex; align-items: center; justify-content: center;
+}
+#scene3d {
+  width: 100% !important; height: 100% !important;
+  display: block;
+}
+.imm2-stage-fallback {
+  display: none; width: 100%; height: 100%; object-fit: cover;
+  border-radius: 12px;
+}
+.imm2-loading {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(170deg, #FFFFFF 0%, #F4F8FC 100%);
+  z-index: 5; transition: opacity 0.6s ease; pointer-events: none;
+}
+.imm2-loading.gone { opacity: 0; }
+.imm2-loading-dot {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--cyan);
+  animation: imm2-load-pulse 1.4s infinite ease-in-out;
+}
+@keyframes imm2-load-pulse {
+  0%,100% { transform: scale(0.7); opacity: 0.4; }
+  50%     { transform: scale(1.0); opacity: 1; }
+}
+
+@media (max-width: 960px) {
+  .imm2-hero {
+    grid-template-columns: 1fr;
+    padding: 60px 24px 40px; gap: 36px; min-height: auto;
+  }
+  .imm2-stage { height: 56vh; min-height: 360px; order: -1; }
+  #scene3d { display: none; }
+  .imm2-stage-fallback { display: block; }
+  .imm2-loading { display: none; }
+  .imm2-h1 { font-size: clamp(38px, 11vw, 56px); }
+  .imm2-sub { font-size: 17px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #scene3d { display: none; }
+  .imm2-stage-fallback { display: block; }
+  .imm2-loading { display: none; }
+  .imm2-eyebrow .pulse-dot { animation: none; }
+}
+
+body.legacy-mode .imm2-hero { display: none; }
+body:not(.legacy-mode) .hero.legacy { display: none; }
+
+/* ============================================================
+   Interactive primitives (DOVA-2026-PROD-001 step 4i)
+   Vanilla ports of Magic UI / Aceternity patterns (MIT).
+   Sources: magicui.design (animated underline, magnetic button),
+            ui.aceternity.com (spotlight hover card).
+   Voice firewall: no upstream copy, just the interaction model.
+   ============================================================ */
+
+/* --- A. Animated nav-link underline (pure CSS) --- */
+@media (hover: hover) {
+  .nav-links > li > a:not(.nav-cta) {
+    position: relative;
+    display: inline-block;
+  }
+  .nav-links > li > a:not(.nav-cta)::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(95deg, var(--blue), var(--cyan));
+    transition: width 0.28s ease;
+    border-radius: 2px;
+  }
+  .nav-links > li > a:not(.nav-cta):hover::after,
+  .nav-links > li > a:not(.nav-cta):focus-visible::after {
+    width: 100%;
+  }
+}
+
+/* --- B. Magnetic button base (transform driven from primitives.js) --- */
+.magnetic {
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.25s ease;
+  will-change: transform;
+}
+@media (prefers-reduced-motion: reduce) {
+  .magnetic { transition: none; }
+}
+
+/* --- C. Spotlight hover card (CSS vars + ::before overlay) --- */
+.spotlight {
+  position: relative;
+  isolation: isolate;
+  --sx: 50%;
+  --sy: 50%;
+}
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    420px circle at var(--sx) var(--sy),
+    rgba(26, 127, 232, 0.10),
+    rgba(0, 170, 204, 0.04) 30%,
+    transparent 55%
+  );
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 1;
+}
+@media (hover: hover) {
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+}
+.spotlight > * {
+  position: relative;
+  z-index: 2;
+}

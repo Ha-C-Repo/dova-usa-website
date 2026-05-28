@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /prototype/
+Disallow: /prototype-v2/
+Disallow: /cost-savings/
+
+Sitemap: https://dovausa.com/sitemap.xml

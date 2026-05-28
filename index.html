@@ -3,12 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>D.O.V.A. — Smarter, Safer Vehicle Access</title>
+<title>D.O.V.A. - Smarter, Safer Vehicle Access</title>
 <meta name="description" content="The only cloud-connected OBD-II fleet access platform compatible with every U.S. vehicle since 1996. Three-gate authorization. Diagnostic-linked access log. Patent Pending.">
+<link rel="canonical" href="https://dovausa.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://dovausa.com/">
+<meta property="og:title" content="D.O.V.A. - Smarter, Safer Vehicle Access">
+<meta property="og:description" content="The only cloud-connected OBD-II fleet access platform compatible with every U.S. vehicle since 1996. Three-gate authorization. Diagnostic-linked access log. Patent Pending.">
+<meta property="og:image" content="https://dovausa.com/assets/images/og/og-default.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="D.O.V.A., LLC">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="D.O.V.A. - Smarter, Safer Vehicle Access">
+<meta name="twitter:description" content="The only cloud-connected OBD-II fleet access platform compatible with every U.S. vehicle since 1996. Three-gate authorization. Diagnostic-linked access log. Patent Pending.">
+<meta name="twitter:image" content="https://dovausa.com/assets/images/og/og-default.png">
 <link rel="stylesheet" href="/assets/css/styles.css">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "D.O.V.A., LLC",
+  "alternateName": "DOVA",
+  "url": "https://dovausa.com",
+  "logo": "https://dovausa.com/assets/images/dova_shield_stamp.svg",
+  "description": "Smarter, Safer Vehicle Access. Cloud-connected OBD-II authorization for fleet, rental, municipal, and automotive retail operators.",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "email": "info@dovausa.com",
+    "telephone": "+1-713-255-2172",
+    "contactType": "Sales",
+    "areaServed": "US"
+  }
+}
+</script>
 </head>
 <body>
+<a class="skip-link" href="#main">Skip to content</a>
 
 <!-- Announcement bar -->
 <div class="announce-bar">
@@ -36,28 +68,70 @@
     <li class="dropdown">
       <a href="/solutions/">Solutions</a>
       <ul class="dropdown-menu">
-        <li><a href="/solutions/dealerships/">For Dealerships</a></li>
+        <li><a href="/solutions/dealerships/">For Automotive Retail</a></li>
         <li><a href="/solutions/fleet/">For Fleet Operators</a></li>
         <li><a href="/post-sale/">Post-Sale Options</a></li>
         <li><a href="/roi/">ROI Calculator</a></li>
       </ul>
     </li>
     <li><a href="/contact/">Contact</a></li>
-    <li><a class="nav-cta" href="/contact/">Book a Demo</a></li>
+    <li><a class="nav-cta magnetic" href="/contact/">Book a Demo</a></li>
   </ul>
 </nav>
 
-<!-- Hero -->
-<section class="hero">
+<!-- Hero (immersive, Three.js scene + scroll-driven camera) -->
+<section class="imm2-hero" id="immHero" aria-label="DOVA platform hero">
+  <a id="main" tabindex="-1"></a>
+  <div class="imm2-text">
+    <div class="imm2-eyebrow">
+      <span class="pulse-dot"></span>
+      Patent Pending &middot; Enterprise Vehicle Access
+    </div>
+    <h1 class="imm2-h1">
+      <span class="gradline" id="immH1Line1">Smarter,</span>
+      <span class="gradline" id="immH1Line2">Safer Vehicle</span>
+      <span class="gradline" id="immH1Line3">Access.</span>
+    </h1>
+    <p class="imm2-sub" id="immSub">
+      The only cloud-connected OBD-II platform that works on every U.S. vehicle since 1996. No OEM agreements, no lockboxes, no lost keys.
+    </p>
+    <div class="imm2-btns">
+      <a href="/contact/" class="imm2-btn-p magnetic">Book a Demo</a>
+      <a href="/how-it-works/" class="imm2-btn-s">How It Works &rarr;</a>
+    </div>
+    <div class="imm2-steps">
+      <span class="imm2-step-label" id="stepLabel">Install</span>
+      <div class="imm2-step-dots">
+        <span class="active" data-step="0"></span>
+        <span data-step="1"></span>
+        <span data-step="2"></span>
+        <span data-step="3"></span>
+      </div>
+      <span style="opacity: 0.6; font-size: 12px;">Scroll to navigate the platform</span>
+    </div>
+  </div>
+  <div class="imm2-stage" id="immStage">
+    <canvas id="scene3d" aria-hidden="true"></canvas>
+    <picture class="imm2-stage-fallback">
+      <source srcset="/assets/images/dova-hero-frame-1.avif" type="image/avif">
+      <source srcset="/assets/images/dova-hero-frame-1.webp" type="image/webp">
+      <img src="/assets/images/dova-hero-frame-1.png" alt="DOVA module installed in OBD-II port" width="1344" height="768">
+    </picture>
+    <div class="imm2-loading" id="loadingEl"><div class="imm2-loading-dot"></div></div>
+  </div>
+</section>
+
+<!-- Legacy hero (shown when ?legacy=1 or scene unsupported) -->
+<section class="hero legacy">
   <div class="hero-dots"></div>
   <div class="hero-vignette"></div>
   <div class="hero-glow"></div>
   <div class="hero-fade"></div>
   <div class="hero-badge"><span class="pulse-dot"></span>Patent Pending · Enterprise Vehicle Access</div>
   <h1 class="hero-h1">Smarter, Safer<br><span class="grad-text">Vehicle Access.</span></h1>
-  <p class="hero-sub">The only cloud-connected OBD-II platform that works on every U.S. vehicle since 1996 — no OEM agreements, no lockboxes, no lost keys.</p>
+  <p class="hero-sub">The only cloud-connected OBD-II platform that works on every U.S. vehicle since 1996 - no OEM agreements, no lockboxes, no lost keys.</p>
   <div class="hero-btns">
-    <a href="/contact/" class="btn-p">Book a Demo</a>
+    <a href="/contact/" class="btn-p magnetic">Book a Demo</a>
     <a href="/how-it-works/" class="btn-s">How It Works &rarr;</a>
   </div>
 </section>
@@ -66,7 +140,7 @@
 <div class="stats-bar">
   <div class="stat-cell"><div class="stat-n">1996<span class="hi">+</span></div><div class="stat-l">Every U.S. vehicle compatible</div></div>
   <div class="stat-cell"><div class="stat-n">$0</div><div class="stat-l">OEM licensing fees required</div></div>
-  <div class="stat-cell"><div class="stat-n">18<span class="hi"> min</span></div><div class="stat-l">Avg. time wasted per access — eliminated</div></div>
+  <div class="stat-cell"><div class="stat-n">18<span class="hi"> min</span></div><div class="stat-l">Avg. time wasted per access - eliminated</div></div>
   <div class="stat-cell"><div class="stat-n">100<span class="hi">%</span></div><div class="stat-l">Fleet compatible, day one</div></div>
 </div>
 
@@ -76,13 +150,13 @@
     <div>
       <div class="eyebrow">The Problem</div>
       <div class="prob-quote">"Physical Keys Are a Liability."</div>
-      <p class="s-body">Keys walk off lots. Paper logs get falsified. When a vehicle goes missing, damage is disputed, or an employee is involved in an incident — there is no reliable record. Just a paper log that may or may not be accurate. DOVA was built to solve that completely.</p>
+      <p class="s-body">Keys walk off lots. Paper logs get falsified. When a vehicle goes missing, damage is disputed, or an employee is involved in an incident - there is no reliable record. Just a paper log that may or may not be accurate. DOVA was built to solve that completely.</p>
     </div>
     <div class="prob-list">
       <div class="prob-item"><span class="prob-dot"></span>No verifiable record of who accessed which vehicle</div>
       <div class="prob-item"><span class="prob-dot"></span>No way to require supervisor approval before access</div>
       <div class="prob-item"><span class="prob-dot"></span>No vehicle condition snapshot at time of access</div>
-      <div class="prob-item"><span class="prob-dot"></span>No enforcement — only policy, no mechanism</div>
+      <div class="prob-item"><span class="prob-dot"></span>No enforcement - only policy, no mechanism</div>
     </div>
   </div>
 </section>
@@ -92,28 +166,28 @@
   <div class="inner">
     <div class="eyebrow">The DOVA Difference</div>
     <h2 class="s-h2">Not Just Access Control.<br><span class="acc">Accountability Infrastructure.</span></h2>
-    <p class="s-body">Three patent-pending innovations that no competitor offers — individually or in combination.</p>
+    <p class="s-body">Three patent-pending innovations that no competitor offers - individually or in combination.</p>
     <div class="cards-grid">
-      <div class="d-card">
+      <div class="d-card spotlight">
         <div class="d-card-stripe"></div>
         <div class="c-tag">Core Patent Asset</div>
         <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
         <div class="c-h3">Three Gates. In Sequence. Every Time.</div>
-        <p class="c-body">Identity verified via 2FA. Role confirmed for that vehicle. Manager approval received where required. No command reaches a vehicle until all three gates clear — in order. Machine-enforced, not policy-based.</p>
+        <p class="c-body">Identity verified via 2FA. Role confirmed for that vehicle. Manager approval received where required. No command reaches a vehicle until all three gates clear - in order. Machine-enforced, not policy-based.</p>
       </div>
-      <div class="d-card">
+      <div class="d-card spotlight">
         <div class="d-card-stripe"></div>
         <div class="c-tag">Crown Jewel IP</div>
         <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
         <div class="c-h3">Every Access. Permanently Documented.</div>
-        <p class="c-body">Every access event is cryptographically bound to a real-time OBD-II diagnostic snapshot — odometer, fuel, battery charge, tire pressure, fault codes. Write-once. Tamper-evident. Legally admissible.</p>
+        <p class="c-body">Every access event is cryptographically bound to a real-time OBD-II diagnostic snapshot - odometer, fuel, battery charge, tire pressure, fault codes. Write-once. Tamper-evident. Legally admissible.</p>
       </div>
-      <div class="d-card">
+      <div class="d-card spotlight">
         <div class="d-card-stripe"></div>
         <div class="c-tag">No OEM Required</div>
         <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div>
         <div class="c-h3">Every Vehicle. No Permission Needed.</div>
-        <p class="c-body">DOVA works on every U.S. vehicle since 1996 via the federally mandated OBD-II port. No OEM API agreements. No infotainment access. One module — every make, every model.</p>
+        <p class="c-body">DOVA works on every U.S. vehicle since 1996 via the federally mandated OBD-II port. No OEM API agreements. No infotainment access. One module - every make, every model.</p>
       </div>
     </div>
   </div>
@@ -127,7 +201,7 @@
     <div class="aud-grid">
       <a href="/solutions/dealerships/" class="aud-card">
         <span class="aud-arr">&rarr;</span>
-        <div class="aud-ttl">Auto Dealer Groups &amp; Franchises</div>
+        <div class="aud-ttl">For Automotive Retail</div>
         <div class="aud-dsc">Stop losing time to lost keys. Build a cryptographic record that protects your lot, your inventory, and every customer relationship.</div>
       </a>
       <a href="/solutions/fleet/" class="aud-card">
@@ -152,7 +226,7 @@
   <h2 class="s-h2">Ready to Modernize<br>Vehicle Access?</h2>
   <p class="s-body centered">DOVA is live, patent pending, and ready to deploy. Let us show you what it does for your operation.</p>
   <div class="btn-row">
-    <a href="/contact/" class="btn-p-w">Book a Demo</a>
+    <a href="/contact/" class="btn-p-w magnetic">Book a Demo</a>
     <a href="/product/" class="btn-s-w">View Product &rarr;</a>
   </div>
 </section>
@@ -181,7 +255,7 @@
     </div>
     <div class="f-col">
       <h4>Solutions</h4>
-      <a href="/solutions/dealerships/">For Dealerships</a>
+      <a href="/solutions/dealerships/">For Automotive Retail</a>
       <a href="/solutions/fleet/">For Fleet Operators</a>
       <a href="/roi/">ROI Calculator</a>
       <a href="/contact/">Book a Demo</a>
@@ -197,5 +271,20 @@
 </footer>
 
 <script src="/assets/js/main.js"></script>
+<script src="/assets/js/primitives.js" defer></script>
+
+<!-- Three.js + GSAP + Lenis (Phase 4h immersive hero) -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+    "three/addons/": "https://unpkg.com/three@0.165.0/examples/jsm/"
+  }
+}
+</script>
+<script type="module" src="/assets/js/hero-scene.js"></script>
 </body>
 </html>
