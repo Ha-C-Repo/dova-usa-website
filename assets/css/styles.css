@@ -2000,7 +2000,7 @@ textarea:focus-visible {
   top: 50%;
   left: 64px;
   transform: translateY(-50%);
-  max-width: 620px;
+  max-width: 720px;
   pointer-events: none;
 }
 .imm2-text > * { pointer-events: auto; }
