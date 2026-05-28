@@ -20,6 +20,17 @@
 <meta name="twitter:image" content="https://dovausa.com/assets/images/og/og-default.png">
 <link rel="stylesheet" href="/assets/css/styles.css">
 <link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "DOVA ROI Calculator",
+  "url": "https://dovausa.com/roi/",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+}
+</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -127,5 +138,9 @@
 
 <script src="/assets/js/main.js"></script>
 <script src="/assets/js/primitives.js" defer></script>
+<!-- Cloudflare Web Analytics (free, no cookies). Activate by replacing the token below.
+     To get a token: dash.cloudflare.com -> Analytics & Logs -> Web Analytics -> Add a site (dovausa.com).
+     The script below stays inert until the placeholder is replaced. -->
+<script>(function(){var t='REPLACE_WITH_CF_BEACON_TOKEN';if(t&&t.indexOf('REPLACE_WITH')===-1){var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon',JSON.stringify({token:t}));document.head.appendChild(s);}})();</script>
 </body>
 </html>

@@ -1528,9 +1528,6 @@ textarea:focus-visible {
   .imm2-eyebrow .pulse-dot { animation: none; }
 }
 
-.hero.legacy { display: none !important; }
-body.legacy-mode .imm2-hero { display: none !important; }
-body.legacy-mode .hero.legacy { display: flex !important; }
 
 /* ============================================================
    Interactive primitives (DOVA-2026-PROD-001 step 4i)
