@@ -187,46 +187,102 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   body.rotation.z = Math.PI / 2;
   moduleGroup.add(body);
 
-  const accent = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.02, 0.03), cyanGlow);
-  accent.position.set(0, 0.17, 0);
+  // === Front cyan accent stripe, wraps the front lip of the top face ===
+  const accent = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.020, 0.024), cyanGlow);
+  accent.position.set(0, 0.214, 0.255);
   moduleGroup.add(accent);
 
-  const facePlate = new THREE.Mesh(new THREE.BoxGeometry(0.7, 0.005, 0.45), navyLightMat);
+  // === Inset matte plate (top face main surface) ===
+  const facePlate = new THREE.Mesh(new THREE.BoxGeometry(0.74, 0.005, 0.48), navyLightMat);
   facePlate.position.set(0, 0.21, 0);
   moduleGroup.add(facePlate);
 
-  // === Detail: brushed metal bezel around the top face ===
+  // === Brushed aluminum bezel: proper rounded rectangle frame around the inset plate ===
+  const bezelShape = new THREE.Shape();
+  (function buildBezelShape() {
+    const bw = 0.39, bh = 0.255, br = 0.030;
+    bezelShape.moveTo(-bw + br, -bh);
+    bezelShape.lineTo(bw - br, -bh);
+    bezelShape.quadraticCurveTo(bw, -bh, bw, -bh + br);
+    bezelShape.lineTo(bw, bh - br);
+    bezelShape.quadraticCurveTo(bw, bh, bw - br, bh);
+    bezelShape.lineTo(-bw + br, bh);
+    bezelShape.quadraticCurveTo(-bw, bh, -bw, bh - br);
+    bezelShape.lineTo(-bw, -bh + br);
+    bezelShape.quadraticCurveTo(-bw, -bh, -bw + br, -bh);
+    const inner = new THREE.Path();
+    const iw = bw - 0.022, ih = bh - 0.022, ir = br - 0.008;
+    inner.moveTo(-iw + ir, -ih);
+    inner.lineTo(iw - ir, -ih);
+    inner.quadraticCurveTo(iw, -ih, iw, -ih + ir);
+    inner.lineTo(iw, ih - ir);
+    inner.quadraticCurveTo(iw, ih, iw - ir, ih);
+    inner.lineTo(-iw + ir, ih);
+    inner.quadraticCurveTo(-iw, ih, -iw, ih - ir);
+    inner.lineTo(-iw, -ih + ir);
+    inner.quadraticCurveTo(-iw, -ih, -iw + ir, -ih);
+    bezelShape.holes.push(inner);
+  })();
   const bezelMat = new THREE.MeshPhysicalMaterial({
-    color: 0xAAB4C2, metalness: 1.0, roughness: 0.32,
-    clearcoat: 0.4, clearcoatRoughness: 0.2, envMapIntensity: 1.1
+    color: 0xC0C8D2, metalness: 1.0, roughness: 0.24,
+    clearcoat: 0.7, clearcoatRoughness: 0.12, envMapIntensity: 1.4
   });
-  const bezelGeo = new THREE.TorusGeometry(0.43, 0.012, 6, 64);
+  const bezelGeo = new THREE.ExtrudeGeometry(bezelShape, {
+    depth: 0.014, bevelEnabled: true,
+    bevelThickness: 0.005, bevelSize: 0.005, bevelSegments: 3, curveSegments: 10
+  });
   const bezel = new THREE.Mesh(bezelGeo, bezelMat);
   bezel.rotation.x = -Math.PI / 2;
-  bezel.position.set(0, 0.214, 0);
-  bezel.scale.set(1.6, 1.6, 1.0);
+  bezel.position.set(0, 0.216, 0);
   bezel.castShadow = true;
   moduleGroup.add(bezel);
 
-  // === Detail: vent grille (5 thin slots) on the top face, rear area ===
+  // === Recessed vent grille: 5 deep dark slots inside the bezel, rear area ===
   const ventMat = new THREE.MeshStandardMaterial({
-    color: 0x06101E, metalness: 0.6, roughness: 0.5, envMapIntensity: 0.4
+    color: 0x05080F, metalness: 0.25, roughness: 0.88, envMapIntensity: 0.25
   });
   for (let vi = 0; vi < 5; vi++) {
     const vent = new THREE.Mesh(
-      new THREE.BoxGeometry(0.32, 0.005, 0.018),
+      new THREE.BoxGeometry(0.30, 0.014, 0.020),
       ventMat
     );
-    vent.position.set(0, 0.214, -0.18 - vi * 0.04);
+    vent.position.set(0, 0.206, -0.105 - vi * 0.032);
     moduleGroup.add(vent);
   }
 
-  // === Detail: small DOVA wordmark stripe (cyan emissive accent on top) ===
-  const wordmarkMat = new THREE.MeshBasicMaterial({ color: 0x4FC9E8, transparent: true, opacity: 0.42 });
-  const wordmark = new THREE.Mesh(new THREE.PlaneGeometry(0.22, 0.018), wordmarkMat);
+  // === Engraved D.O.V.A. wordmark via canvas texture (sharp, readable) ===
+  const wmCanvas = document.createElement('canvas');
+  wmCanvas.width = 512; wmCanvas.height = 64;
+  (function paintWordmark() {
+    const c = wmCanvas.getContext('2d');
+    c.fillStyle = '#0B1A2E';
+    c.fillRect(0, 0, 512, 64);
+    c.font = 'bold 36px Inter, Arial, sans-serif';
+    c.fillStyle = '#4FC9E8';
+    c.textAlign = 'center';
+    c.textBaseline = 'middle';
+    c.fillText('D . O . V . A .', 256, 36);
+  })();
+  const wmTex = new THREE.CanvasTexture(wmCanvas);
+  wmTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+  const wordmarkMat = new THREE.MeshStandardMaterial({
+    map: wmTex, emissive: 0x4FC9E8, emissiveMap: wmTex, emissiveIntensity: 0.6,
+    metalness: 0.1, roughness: 0.55
+  });
+  const wordmark = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.052), wordmarkMat);
   wordmark.rotation.x = -Math.PI / 2;
-  wordmark.position.set(0, 0.216, 0.12);
+  wordmark.position.set(0, 0.224, 0.12);
   moduleGroup.add(wordmark);
+
+  // === Parting line: thin housing seam along the long sides ===
+  const seamMat = new THREE.MeshStandardMaterial({
+    color: 0x040810, metalness: 0.0, roughness: 0.92, envMapIntensity: 0.1
+  });
+  for (const side of [-1, 1]) {
+    const seam = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.005, 0.0022), seamMat);
+    seam.position.set(0, 0.10, side * 0.255);
+    moduleGroup.add(seam);
+  }
 
   // === Detail: cable nub + extension exiting the back ===
   const cableMat = new THREE.MeshStandardMaterial({
