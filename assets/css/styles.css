@@ -645,8 +645,23 @@ button { font-family: inherit; cursor: pointer; }
 
 /* ----- numbered steps (How It Works) ----- */
 .steps {
-  max-width: 880px;
+  max-width: 920px;
   margin: 0 auto;
+  position: relative;
+}
+.steps::before {
+  content: '';
+  position: absolute;
+  left: 51px;
+  top: 60px;
+  bottom: 60px;
+  width: 2px;
+  background: linear-gradient(180deg,
+    rgba(0,170,204,0.32) 0%,
+    rgba(26,127,232,0.18) 50%,
+    rgba(0,170,204,0.32) 100%);
+  pointer-events: none;
+  z-index: 0;
 }
 .how-anim {
   max-width: 1180px;
@@ -659,14 +674,26 @@ button { font-family: inherit; cursor: pointer; }
   display: block;
 }
 .step {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 14px;
+  background: linear-gradient(170deg, #FFFFFF 0%, #FAFCFE 100%);
+  border: 1.5px solid rgba(26, 127, 232, 0.16);
+  border-radius: 18px;
   padding: 32px 36px;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
   display: grid;
   grid-template-columns: 80px 1fr;
   gap: 28px;
+  position: relative;
+  z-index: 1;
+  box-shadow: 0 6px 28px rgba(10, 24, 48, 0.04);
+  transition: transform 0.3s cubic-bezier(0.2,0.8,0.2,1),
+              box-shadow 0.3s ease,
+              border-color 0.3s ease;
+}
+.step:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 170, 204, 0.42);
+  box-shadow: 0 16px 48px rgba(0, 170, 204, 0.14), 0 4px 12px rgba(10, 24, 48, 0.06);
+}
   align-items: flex-start;
   box-shadow: var(--shadow-sm);
   position: relative;
@@ -1354,8 +1381,9 @@ button { font-family: inherit; cursor: pointer; }
   .b-cta { padding-top: 90px; padding-bottom: 90px; }
   .gates { grid-template-columns: 1fr; }
   .check-list { grid-template-columns: 1fr; }
-  .step { grid-template-columns: 60px 1fr; gap: 18px; padding: 24px 22px; }
-  .step-num { font-size: 32px; }
+  .step { grid-template-columns: 56px 1fr; gap: 16px; padding: 24px 20px; border-radius: 14px; }
+  .step-num { width: 56px; height: 56px; font-size: 18px; border-radius: 14px; box-shadow: 0 6px 16px rgba(0, 170, 204, 0.28); }
+  .steps::before { left: 44px; top: 40px; bottom: 40px; }
   .feature, .layer { padding: 28px 24px; }
   .full-bar { margin-left: 22px; margin-right: 22px; }
 }
