@@ -11,6 +11,8 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
 (function () {
   'use strict';
@@ -182,6 +184,32 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   ledDisk.position.set(0, 0.222, 0);
   moduleGroup.add(ledDisk);
   scene.add(moduleGroup);
+
+  // === Optional: load a bespoke .glb of the DOVA module if present ===
+  // Drop a Draco-compressed model at /assets/models/dova-module.glb to replace the procedural one.
+  // The procedural module stays in scene as a fallback; the GLB is swapped in once loaded.
+  (function tryLoadModule() {
+    fetch('/assets/models/dova-module.glb', { method: 'HEAD' })
+      .then(r => {
+        if (!r.ok) return;
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderPath('https://unpkg.com/three@0.165.0/examples/jsm/libs/draco/');
+        const loader = new GLTFLoader();
+        loader.setDRACOLoader(dracoLoader);
+        loader.load('/assets/models/dova-module.glb', (gltf) => {
+          const bespoke = gltf.scene;
+          bespoke.scale.set(1, 1, 1);
+          bespoke.position.copy(moduleGroup.position);
+          bespoke.traverse(o => { if (o.isMesh) { o.castShadow = false; o.receiveShadow = false; } });
+          scene.add(bespoke);
+          // Hide the procedural placeholder by setting children invisible
+          moduleGroup.traverse(o => { if (o.isMesh) o.visible = false; });
+          // Re-link the moduleGroup reference so the tick loop animates the new model
+          window.__dovaModuleSwap = { from: moduleGroup, to: bespoke };
+        }, undefined, () => {});
+      })
+      .catch(() => {});
+  })();
 
   // === Cloud authorization ===
   const cloudGroup = new THREE.Group();

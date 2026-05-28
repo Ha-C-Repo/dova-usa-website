@@ -206,6 +206,19 @@
 </section>
 
 <!-- Bottom CTA -->
+<!-- Cinematic backdrop (5i). Veo-ready: drop /assets/videos/dova-backdrop.webm to activate. CSS fallback runs otherwise. -->
+<section class="cinematic-bed">
+  <div class="cinematic-bed-fallback"></div>
+  <video class="cinematic-bed-video" autoplay muted loop playsinline aria-hidden="true" preload="metadata"
+         data-src="/assets/videos/dova-backdrop.webm" data-src-mp4="/assets/videos/dova-backdrop.mp4"></video>
+  <div class="cinematic-bed-scrim"></div>
+  <div class="cinematic-bed-text">
+    <div class="cinematic-bed-eyebrow">The DOVA Loop</div>
+    <h2 class="cinematic-bed-h2">Identity verified. Vehicle authorized.<br>Diagnostic recorded.</h2>
+    <p class="cinematic-bed-sub">The full authorization loop, on every vehicle you operate. Built to scale across makes, model years, and shift teams.</p>
+    <div class="btn-row"><a href="/contact/" class="btn-p magnetic">Book a Demo</a><a href="/how-it-works/" class="btn-s">See the Architecture &rarr;</a></div>
+  </div>
+</section>
 <section class="b-cta">
   <div class="b-cta-glow"></div>
   <div class="b-cta-dots"></div>
@@ -261,6 +274,7 @@
 <script src="/assets/js/cursor.js" defer></script>
 <script src="/assets/js/reveals.js" defer></script>
 <script src="/assets/js/transitions.js" defer></script>
+<script src="/assets/js/cinematic-bed.js" defer></script>
 <script src="/assets/js/primitives.js" defer></script>
 
 <!-- Three.js + GSAP + Lenis (Phase 4h immersive hero) -->
