@@ -1,0 +1,8 @@
+# Local 3D pipeline working directory (model weights, venv, repo clones)
+.pipeline-work/
+assets/models/candidates/*.glb
+assets/models/candidates/latest.txt
+assets/models/candidates/dova-module-raw-*
+assets/models/candidates/dova-module-painted-*
+assets/models/references/*.png
+!assets/models/references/.keep
