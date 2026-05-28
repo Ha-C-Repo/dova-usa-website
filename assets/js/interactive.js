@@ -172,12 +172,39 @@
     } catch (e) { /* swallow */ }
   }
 
+  // ---------- 100 percent dot matrix populator ----------
+  function initStatMatrix() {
+    const svgNS = 'http://www.w3.org/2000/svg';
+    document.querySelectorAll('.stat-matrix').forEach((g) => {
+      if (g.dataset.filled) return;
+      g.dataset.filled = 'true';
+      const cols = 20, rows = 5, sx = 38, sy = 6, gap = 4.5, r = 1.4;
+      let i = 0;
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const c = document.createElementNS(svgNS, 'circle');
+          c.setAttribute('cx', sx + col * gap);
+          c.setAttribute('cy', sy + row * gap);
+          c.setAttribute('r', r);
+          c.setAttribute('fill', '#00C8E8');
+          // Stagger the matrix fill so it reads as a wave
+          const delay = ((col + row) * 18) + (row * 12);
+          c.style.animationDelay = delay + 'ms';
+          c.style.transformOrigin = (sx + col * gap) + 'px ' + (sy + row * gap) + 'px';
+          g.appendChild(c);
+          i++;
+        }
+      }
+    });
+  }
+
   // ---------- Boot ----------
   function boot() {
     initCursor();
     initTilt();
     initReveals();
     initAmbientGrid();
+    initStatMatrix();
     initLenisIfNeeded();
   }
 
