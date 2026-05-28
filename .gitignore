@@ -2,7 +2,12 @@
 .pipeline-work/
 assets/models/candidates/*.glb
 assets/models/candidates/latest.txt
+assets/models/candidates/latest-raw.txt
 assets/models/candidates/dova-module-raw-*
 assets/models/candidates/dova-module-painted-*
+assets/models/candidates/dova-module-clean-*
+assets/models/candidates/dova-module-fit-*
+assets/models/candidates/triposr-*/
 assets/models/references/*.png
+assets/models/references/_runway-extract/
 !assets/models/references/.keep
