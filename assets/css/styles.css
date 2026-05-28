@@ -1503,14 +1503,20 @@ button { font-family: inherit; cursor: pointer; }
    Phase 5.7.11: tighter typography, hero legibility, justified body
    ============================================================ */
 
-/* Body paragraphs: justified, tighter leading. Headings stay flush left. */
-.s-body, .c-body, .feature-body, .aud-dsc, .layer-body, .vert-body {
+/* Body paragraphs: tighter leading. Justify only wide top-level paragraphs;
+   narrow card text stays left-aligned so words do not pull apart. */
+.s-body {
   text-align: justify;
   text-justify: inter-word;
   hanging-punctuation: first last;
+}
+.s-body, .c-body, .feature-body, .aud-dsc, .layer-body, .vert-body {
   line-height: 1.62;
 }
-.s-body.centered, .b-cta .s-body, .center .s-body { text-align: center; }
+.s-body.centered, .b-cta .s-body, .center .s-body,
+.b-cta .s-body, .hero .s-body, .hero-sub, .s-body[class*="centered"] {
+  text-align: center;
+}
 .imm2-sub {
   line-height: 1.5;
   text-align: left;
