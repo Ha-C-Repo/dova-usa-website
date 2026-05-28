@@ -297,7 +297,7 @@ button { font-family: inherit; cursor: pointer; }
   position: relative;
   overflow: hidden;
 }
-.hero.compact { min-height: auto; padding: 80px 48px 60px; }
+.hero.compact { min-height: auto; padding: 56px 48px 50px; }
 .hero-dots {
   position: absolute;
   inset: 0;
@@ -604,9 +604,12 @@ button { font-family: inherit; cursor: pointer; }
 /* ----- audience cards ----- */
 .aud-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
   margin-top: 52px;
+  max-width: 1080px;
+  margin-left: auto;
+  margin-right: auto;
 }
 .aud-card {
   background: var(--white);
@@ -1638,9 +1641,9 @@ button { font-family: inherit; cursor: pointer; }
 .imm2-text {
   background: linear-gradient(95deg,
     rgba(5, 14, 28, 0.42) 0%,
-    rgba(5, 14, 28, 0.34) 55%,
+    rgba(5, 14, 28, 0.34) 60%,
     rgba(5, 14, 28, 0.0) 100%);
-  padding: 26px 40px 30px 32px !important;
+  padding: 22px 32px 26px 24px !important;
   border-radius: 18px;
   backdrop-filter: blur(6px) saturate(140%);
   -webkit-backdrop-filter: blur(6px) saturate(140%);
@@ -1721,7 +1724,7 @@ textarea:focus-visible {
   overflow: hidden;
   align-items: center;
 }
-.imm2-text { position: relative; z-index: 4; max-width: 580px; }
+.imm2-text { position: relative; z-index: 4; max-width: 720px; }
 .imm2-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--syne); font-weight: 700; font-size: 11px;
@@ -1743,9 +1746,9 @@ textarea:focus-visible {
 }
 .imm2-h1 {
   font-family: var(--syne); font-weight: 800;
-  font-size: clamp(38px, 4.5vw, 70px);
-  line-height: 1.04; letter-spacing: -0.02em;
-  color: var(--navy); margin: 0 0 28px;
+  font-size: clamp(36px, 3.8vw, 58px);
+  line-height: 1.05; letter-spacing: -0.015em;
+  color: var(--navy); margin: 0 0 22px;
 }
 .imm2-h1 .gradline {
   background: linear-gradient(95deg, var(--blue) 0%, var(--cyan) 100%);
