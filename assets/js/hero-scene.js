@@ -24,7 +24,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     return;
   }
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || window.innerWidth < 960) {
+  if (reduceMotion || window.innerWidth < 480) {
     const loading = document.getElementById('loadingEl');
     if (loading) loading.classList.add('gone');
     initLenisOnly();
@@ -53,7 +53,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     powerPreference: 'high-performance'
   });
   renderer.setSize(stageRect.width, stageRect.height, false);
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth >= 960 ? 2 : 1.5));
   renderer.setClearColor(0x050E1C, 1);
   renderer.toneMapping = THREE.LinearToneMapping;
   renderer.toneMappingExposure = 1.0;
@@ -263,7 +263,7 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
   composer.addPass(new RenderPass(scene, camera));
   const bloomPass = new UnrealBloomPass(
     new THREE.Vector2(stageRect.width, stageRect.height),
-    0.85, 0.9, 0.78
+    (window.innerWidth >= 960 ? 0.85 : 0.6), 0.9, 0.78
   );
   composer.addPass(bloomPass);
   composer.addPass(new OutputPass());
@@ -449,13 +449,17 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
       window.gsap.ticker.lagSmoothing(0);
 
       const heroSection = document.getElementById('immHero');
+      // Adaptive pin: full multi-act only on wider viewports.
+      const isWide = window.innerWidth >= 960;
+      const isCompact = window.innerWidth >= 700 && window.innerWidth < 960;
+      const pinEnd = isWide ? '+=500%' : (isCompact ? '+=240%' : '+=120%');
       window.ScrollTrigger.create({
         trigger: heroSection,
         start: 'top top',
-        end: '+=500%',
+        end: pinEnd,
         scrub: 0.8,
-        pin: true,
-        pinSpacing: true,
+        pin: isWide || isCompact,
+        pinSpacing: isWide || isCompact,
         anticipatePin: 1,
         onUpdate: (self) => {
           scrollProgress = self.progress;
@@ -485,6 +489,11 @@ import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
     renderer.setSize(r.width, r.height, false);
     composer.setSize(r.width, r.height);
     bloomPass.setSize(r.width, r.height);
+    // If we are now in non-pinned territory, force H1 back to Act 1.
+    if (window.innerWidth < 700 && currentState !== 0) {
+      currentState = -1; // force a transition next call
+      setState(0);
+    }
   });
 
   // === Tear-down on unload ===
