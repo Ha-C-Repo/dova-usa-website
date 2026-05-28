@@ -166,35 +166,38 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   const moduleGroup = new THREE.Group();
   moduleGroup.position.set(0, 1.6, 0);
 
+  // === Body: flat slab matching spec bbox 1.10 X 0.22 Y 0.64 Z ===
+  // Shape is the top-face plan view (X wide, Y deep). Extrude depth becomes
+  // the Y thickness after the post-extrude rotation around X.
   const bodyShape = new THREE.Shape();
-  const w = 0.55, h = 0.32, r = 0.06;
-  bodyShape.moveTo(-w + r, -h);
-  bodyShape.lineTo(w - r, -h);
-  bodyShape.quadraticCurveTo(w, -h, w, -h + r);
-  bodyShape.lineTo(w, h - r);
-  bodyShape.quadraticCurveTo(w, h, w - r, h);
-  bodyShape.lineTo(-w + r, h);
-  bodyShape.quadraticCurveTo(-w, h, -w, h - r);
-  bodyShape.lineTo(-w, -h + r);
-  bodyShape.quadraticCurveTo(-w, -h, -w + r, -h);
+  const w = 0.55, d = 0.32, r = 0.045;
+  bodyShape.moveTo(-w + r, -d);
+  bodyShape.lineTo(w - r, -d);
+  bodyShape.quadraticCurveTo(w, -d, w, -d + r);
+  bodyShape.lineTo(w, d - r);
+  bodyShape.quadraticCurveTo(w, d, w - r, d);
+  bodyShape.lineTo(-w + r, d);
+  bodyShape.quadraticCurveTo(-w, d, -w, d - r);
+  bodyShape.lineTo(-w, -d + r);
+  bodyShape.quadraticCurveTo(-w, -d, -w + r, -d);
   const bodyGeo = new THREE.ExtrudeGeometry(bodyShape, {
-    depth: 0.85, bevelEnabled: true,
-    bevelThickness: 0.025, bevelSize: 0.025, bevelSegments: 4, curveSegments: 14
+    depth: 0.22, bevelEnabled: true,
+    bevelThickness: 0.012, bevelSize: 0.014, bevelSegments: 4, curveSegments: 14
   });
-  bodyGeo.translate(0, 0, -0.425);
-  const body = new THREE.Mesh(bodyGeo, navyPaint); body.castShadow = true; body.receiveShadow = false;
+  bodyGeo.translate(0, 0, -0.11);
+  const body = new THREE.Mesh(bodyGeo, navyPaint);
+  body.castShadow = true; body.receiveShadow = false;
   body.rotation.x = -Math.PI / 2;
-  body.rotation.z = Math.PI / 2;
   moduleGroup.add(body);
 
   // === Front cyan accent stripe, wraps the front lip of the top face ===
   const accent = new THREE.Mesh(new THREE.BoxGeometry(0.78, 0.020, 0.024), cyanGlow);
-  accent.position.set(0, 0.214, 0.255);
+  accent.position.set(0, 0.114, 0.305);
   moduleGroup.add(accent);
 
   // === Inset matte plate (top face main surface) ===
   const facePlate = new THREE.Mesh(new THREE.BoxGeometry(0.74, 0.005, 0.48), navyLightMat);
-  facePlate.position.set(0, 0.21, 0);
+  facePlate.position.set(0, 0.111, 0);
   moduleGroup.add(facePlate);
 
   // === Brushed aluminum bezel: proper rounded rectangle frame around the inset plate ===
@@ -233,7 +236,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   });
   const bezel = new THREE.Mesh(bezelGeo, bezelMat);
   bezel.rotation.x = -Math.PI / 2;
-  bezel.position.set(0, 0.216, 0);
+  bezel.position.set(0, 0.116, 0);
   bezel.castShadow = true;
   moduleGroup.add(bezel);
 
@@ -246,7 +249,7 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
       new THREE.BoxGeometry(0.30, 0.014, 0.020),
       ventMat
     );
-    vent.position.set(0, 0.206, -0.105 - vi * 0.032);
+    vent.position.set(0, 0.108, -0.105 - vi * 0.032);
     moduleGroup.add(vent);
   }
 
@@ -271,51 +274,62 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   });
   const wordmark = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.052), wordmarkMat);
   wordmark.rotation.x = -Math.PI / 2;
-  wordmark.position.set(0, 0.224, 0.12);
+  wordmark.position.set(0, 0.124, 0.12);
   moduleGroup.add(wordmark);
 
-  // === Parting line: thin housing seam along the long sides ===
+  // === Parting line: thin housing seam along the long front and back faces ===
   const seamMat = new THREE.MeshStandardMaterial({
     color: 0x040810, metalness: 0.0, roughness: 0.92, envMapIntensity: 0.1
   });
   for (const side of [-1, 1]) {
-    const seam = new THREE.Mesh(new THREE.BoxGeometry(0.82, 0.005, 0.0022), seamMat);
-    seam.position.set(0, 0.10, side * 0.255);
+    const seam = new THREE.Mesh(new THREE.BoxGeometry(1.06, 0.002, 0.002), seamMat);
+    seam.position.set(0, 0, side * 0.32);
     moduleGroup.add(seam);
   }
 
-  // === Detail: cable nub + extension exiting the back ===
+  // === Cable nub + extension exiting the back face at mid-height ===
   const cableMat = new THREE.MeshStandardMaterial({
     color: 0x0C0F14, metalness: 0.15, roughness: 0.7
   });
   const cableNub = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.028, 0.034, 0.10, 16),
+    new THREE.CylinderGeometry(0.028, 0.034, 0.08, 16),
     cableMat
   );
   cableNub.rotation.x = Math.PI / 2;
-  cableNub.position.set(0, 0.05, -0.43);
+  cableNub.position.set(0, 0, -0.355);
   cableNub.castShadow = true;
   moduleGroup.add(cableNub);
   const cable = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.025, 0.025, 0.32, 12),
+    new THREE.CylinderGeometry(0.022, 0.022, 0.30, 12),
     cableMat
   );
   cable.rotation.x = Math.PI / 2;
-  cable.position.set(0, 0.05, -0.58);
+  cable.position.set(0, 0, -0.55);
   cable.castShadow = true;
   moduleGroup.add(cable);
-  const ledRing = new THREE.Mesh(new THREE.TorusGeometry(0.09, 0.012, 16, 48), cyanRingMat);
+
+  // === Status LED on the top face, offset slightly forward ===
+  const ledRing = new THREE.Mesh(new THREE.TorusGeometry(0.038, 0.006, 12, 36), cyanRingMat);
   ledRing.rotation.x = -Math.PI / 2;
-  ledRing.position.set(0, 0.225, 0);
+  ledRing.position.set(-0.26, 0.124, 0.10);
   moduleGroup.add(ledRing);
 
   const ledDisk = new THREE.Mesh(
-    new THREE.CircleGeometry(0.075, 32),
+    new THREE.CircleGeometry(0.030, 24),
     new THREE.MeshBasicMaterial({ color: 0x4FC9E8, transparent: true, opacity: 0.55 })
   );
   ledDisk.rotation.x = -Math.PI / 2;
-  ledDisk.position.set(0, 0.222, 0);
+  ledDisk.position.set(-0.26, 0.122, 0.10);
   moduleGroup.add(ledDisk);
+
+  // === OBD-II connector recess on the bottom face ===
+  const obdRecessMat = new THREE.MeshStandardMaterial({
+    color: 0x05080F, metalness: 0.4, roughness: 0.65, envMapIntensity: 0.3
+  });
+  const obdRecess = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.018, 0.16), obdRecessMat);
+  obdRecess.position.set(0, -0.108, 0);
+  moduleGroup.add(obdRecess);
+
   scene.add(moduleGroup);
 
   // === Optional: load a bespoke .glb of the DOVA module if present ===
@@ -419,31 +433,31 @@ renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     },
     { // ACT 2 - Enroll. Module seats into the port. VIN handshake.
       camPos: [1.1, 0.85, 2.3], camLook: [0, 0.22, 0],
-      moduleY: 0.32, cloudIntensity: 0.85, label: 'Enroll',
+      moduleY: 0.18, cloudIntensity: 0.85, label: 'Enroll',
       line1: 'Plug In.', line2: 'VIN Handshake.', line3: 'Online.',
       sub: 'A thirty-second install. The module joins the cloud authorization engine. The vehicle is now part of your fleet.'
     },
     { // ACT 3 - Authorize. Pull back, data flow visible toward cloud.
       camPos: [2.5, 1.55, 2.95], camLook: [1.2, 0.85, -0.3],
-      moduleY: 0.32, cloudIntensity: 1.15, label: 'Authorize',
+      moduleY: 0.18, cloudIntensity: 1.15, label: 'Authorize',
       line1: 'Three Gates.', line2: 'Cloud Mediated.', line3: 'Verifiable.',
       sub: 'Every start, every door, every shift authorized at the platform layer. The patent-pending architecture closes the gaps lockboxes leave open.'
     },
     { // ACT 4 - Audit. Camera frames the cloud sphere. Particle stream peaks.
       camPos: [3.4, 1.45, 1.6], camLook: [2.9, 1.0, -0.7],
-      moduleY: 0.32, cloudIntensity: 1.35, label: 'Audit',
+      moduleY: 0.18, cloudIntensity: 1.35, label: 'Audit',
       line1: 'Every Access.', line2: 'Cryptographic.', line3: 'Permanent.',
       sub: 'Each authorization is bound to a real-time diagnostic snapshot. Write-once, tamper-evident, legally admissible.'
     },
     { // ACT 5 - Network. Wide pull-back shows module-cloud-fleet relationship.
       camPos: [4.2, 2.1, 2.2], camLook: [2.4, 1.1, -0.6],
-      moduleY: 0.32, cloudIntensity: 1.15, label: 'Network',
+      moduleY: 0.18, cloudIntensity: 1.15, label: 'Network',
       line1: 'Every Vehicle.', line2: 'One Network.', line3: 'Real Time.',
       sub: 'Multiple makes, multiple model years, every vehicle on one cloud authorization engine. Fleets unified.'
     },
     { // ACT 6 - Outcome. Final hero framing, slight orbit, all subsystems lit.
       camPos: [2.6, 1.3, 4.0], camLook: [0.6, 0.5, -0.2],
-      moduleY: 0.32, cloudIntensity: 1.5, label: 'Outcome',
+      moduleY: 0.18, cloudIntensity: 1.5, label: 'Outcome',
       line1: 'Smarter,', line2: 'Safer Vehicle', line3: 'Access.',
       sub: 'Identity verified. Vehicle authorized. Diagnostic recorded. The full DOVA loop, on every vehicle you operate.'
     }
