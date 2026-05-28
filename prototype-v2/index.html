@@ -452,29 +452,36 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   renderer.setSize(stageRect.width, stageRect.height, false);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   // Solid light background (no alpha) so we can see the scene clearly
-  renderer.setClearColor(0xEAF1F8, 1);
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 0.7;
+  renderer.setClearColor(0xDCE7F3, 1);
+  renderer.toneMapping = THREE.LinearToneMapping;
+  renderer.toneMappingExposure = 1.0;
   renderer.outputColorSpace = THREE.SRGBColorSpace;
 
-  // ===== HDR environment via RoomEnvironment, lower influence =====
+  // ===== HDR environment via RoomEnvironment (subtle reflections only) =====
   const pmrem = new THREE.PMREMGenerator(renderer);
   const envScene = new RoomEnvironment(renderer);
-  const envTexture = pmrem.fromScene(envScene, 0.18).texture;
+  const envTexture = pmrem.fromScene(envScene, 0.15).texture;
   scene.environment = envTexture;
   envScene.children.forEach(c => { if (c.material) c.material.dispose(); });
 
-  // ===== Lights (boost the studio env) =====
-  const hemi = new THREE.HemisphereLight(0xE6F0FA, 0xCFDEEC, 0.4);
+  // ===== Lights =====
+  const ambient = new THREE.AmbientLight(0xFFFFFF, 0.5);
+  scene.add(ambient);
+
+  const hemi = new THREE.HemisphereLight(0xFFFFFF, 0xCFDEEC, 0.7);
   scene.add(hemi);
 
-  const keyLight = new THREE.DirectionalLight(0xFFFFFF, 1.6);
+  const keyLight = new THREE.DirectionalLight(0xFFFFFF, 2.4);
   keyLight.position.set(4, 6, 5);
   scene.add(keyLight);
 
-  const rimLight = new THREE.PointLight(0x4FC9E8, 1.2, 12);
+  const rimLight = new THREE.PointLight(0x4FC9E8, 1.8, 12);
   rimLight.position.set(-3, 2, -2);
   scene.add(rimLight);
+
+  const fillLight = new THREE.DirectionalLight(0xCFE4F4, 0.8);
+  fillLight.position.set(-4, 3, 4);
+  scene.add(fillLight);
 
   // ===== Materials =====
   const NAVY = 0x14253A;
@@ -485,12 +492,12 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
   const BG_BLUE = 0xC9DCEE;
 
   const navyPaint = new THREE.MeshPhysicalMaterial({
-    color: NAVY,
-    metalness: 0.25,
-    roughness: 0.42,
-    clearcoat: 0.7,
-    clearcoatRoughness: 0.22,
-    envMapIntensity: 0.45
+    color: 0x0D1A2B,  // deeper navy so it reads against light bg
+    metalness: 0.35,
+    roughness: 0.38,
+    clearcoat: 0.9,
+    clearcoatRoughness: 0.15,
+    envMapIntensity: 0.6
   });
   const navyLight = new THREE.MeshPhysicalMaterial({
     color: NAVY_LIGHT,
@@ -506,9 +513,9 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
     envMapIntensity: 0.6
   });
   const plasticDark = new THREE.MeshStandardMaterial({
-    color: PLASTIC_DARK,
-    metalness: 0.1,
-    roughness: 0.85,
+    color: 0x0C0F14,  // darker so port reads against bg
+    metalness: 0.15,
+    roughness: 0.78,
     envMapIntensity: 0.4
   });
   // Emissive but TONE MAPPED so bloom isn't infinite
