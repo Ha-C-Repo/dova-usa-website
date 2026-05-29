@@ -2516,9 +2516,9 @@ textarea:focus-visible {
 .hero-mini-stage {
   position: relative;
   width: 100%;
-  max-width: 880px;
-  margin: 0 auto 24px;
-  height: clamp(180px, 26vw, 280px);
+  max-width: 1000px;
+  margin: 0 auto 28px;
+  height: clamp(280px, 32vw, 380px);
   pointer-events: auto;
 }
 .hero-mini-stage canvas.hero-mini {
