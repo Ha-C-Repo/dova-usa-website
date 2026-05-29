@@ -2511,3 +2511,36 @@ textarea:focus-visible {
   .imm2-hero { margin-top: -88px; }
   .nav { top: 36px; }
 }
+/* === Phase 5.8: hero mini-scene stages === */
+.hero-mini-stage {
+  position: relative;
+  width: 100%;
+  max-width: 880px;
+  margin: 0 auto 24px;
+  height: clamp(180px, 26vw, 280px);
+  pointer-events: auto;
+}
+.hero-mini-stage canvas.hero-mini {
+  width: 100%;
+  height: 100%;
+  display: block;
+  cursor: grab;
+}
+.hero-mini-stage canvas.hero-mini:active { cursor: grabbing; }
+.hero-mini-poster {
+  display: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+}
+.hero.compact { padding-top: 32px; }
+.hero.compact .hero-eyebrow { margin-top: 8px; }
+@media (max-width: 720px) {
+  .hero-mini-stage { height: 160px; max-width: 100%; }
+  .hero-mini-stage canvas.hero-mini { display: none; }
+  .hero-mini-stage .hero-mini-poster { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-mini-stage canvas.hero-mini { display: none; }
+  .hero-mini-stage .hero-mini-poster { display: block; }
+}
