@@ -303,116 +303,163 @@
   }
 
   function buildCar(scale, color) {
+    // Side-profile extruded car silhouette. Wheels live BELOW the body.
     scale = scale || 1;
     color = color || 0x2c3f56;
     var g = new THREE.Group();
-    var paint = physicalPaint(color, { metalness: 0.45, roughness: 0.35, clearcoat: 0.95, clearcoatRoughness: 0.08 });
+    var paint = physicalPaint(color, { metalness: 0.45, roughness: 0.32, clearcoat: 0.95, clearcoatRoughness: 0.07 });
 
-    // lower chassis (wider)
-    var chassisGeo = roundedBox(1.95 * scale, 0.42 * scale, 0.86 * scale, 0.12 * scale);
-    chassisGeo.center();
-    var chassis = new THREE.Mesh(chassisGeo, paint);
-    chassis.position.y = 0.22 * scale;
-    g.add(chassis);
-    // cabin
-    var cabinShape = new THREE.Shape();
-    cabinShape.moveTo(-0.7, 0);
-    cabinShape.lineTo(-0.4, 0.4);
-    cabinShape.lineTo(0.3, 0.4);
-    cabinShape.lineTo(0.55, 0);
-    cabinShape.lineTo(-0.7, 0);
-    var cabinGeo = new THREE.ExtrudeGeometry(cabinShape, { depth: 0.78, bevelEnabled: true, bevelSize: 0.05, bevelThickness: 0.05, bevelSegments: 2 });
-    cabinGeo.translate(0, 0, -0.39);
-    cabinGeo.scale(scale, scale, scale);
-    var cabin = new THREE.Mesh(cabinGeo, paint);
-    cabin.position.y = 0.42 * scale;
-    g.add(cabin);
-    // windshield
-    var glass = physicalGlass();
-    var ws = new THREE.Mesh(new THREE.PlaneGeometry(0.45 * scale, 0.32 * scale), glass);
-    ws.position.set(0.18 * scale, 0.55 * scale, 0);
-    ws.rotation.y = -0.05;
-    ws.rotation.x = -0.4;
-    g.add(ws);
-    // headlights
-    var hlMat = physicalCyan(0xfff4c4, 1.3);
-    [0.36, -0.36].forEach(function (z) {
-      var hl = new THREE.Mesh(new THREE.SphereGeometry(0.05 * scale, 12, 12), hlMat);
-      hl.position.set(0.92 * scale, 0.25 * scale, z * scale);
+    // Sedan side profile. Origin at the GROUND between the wheels.
+    // x: along car length (front = +). y: up from ground.
+    var s = new THREE.Shape();
+    s.moveTo(-1.05, 0.22);                          // rear bumper bottom
+    s.lineTo(-1.05, 0.36);                          // rear bumper face
+    s.lineTo(-0.95, 0.45);                          // trunk corner
+    s.lineTo(-0.55, 0.58);                          // up to roofline rear
+    s.quadraticCurveTo(-0.35, 0.78, -0.05, 0.78);   // rear of roof, arc
+    s.quadraticCurveTo(0.15, 0.78, 0.30, 0.62);     // roof to A-pillar
+    s.lineTo(0.55, 0.46);                           // windshield down to hood
+    s.lineTo(0.92, 0.42);                           // hood
+    s.lineTo(1.05, 0.36);                           // hood to grille
+    s.lineTo(1.05, 0.22);                           // front bumper face
+    s.lineTo(-1.05, 0.22);                          // chassis bottom (close)
+
+    var bodyGeo = new THREE.ExtrudeGeometry(s, {
+      depth: 0.78,
+      bevelEnabled: true,
+      bevelSegments: 3,
+      bevelSize: 0.04,
+      bevelThickness: 0.04,
+      curveSegments: 24
+    });
+    bodyGeo.translate(0, 0, -0.39);
+    bodyGeo.scale(scale, scale, scale);
+    var body = new THREE.Mesh(bodyGeo, paint);
+    g.add(body);
+
+    // Side windows — dark glass plates cut into both sides of the cabin.
+    var glass = physicalGlass(0x07101f);
+    [0.4, -0.4].forEach(function (z) {
+      var win = new THREE.Mesh(new THREE.PlaneGeometry(0.7 * scale, 0.18 * scale), glass);
+      win.position.set(-0.12 * scale, 0.62 * scale, z * scale);
+      win.rotation.y = z > 0 ? 0 : Math.PI;
+      g.add(win);
+    });
+
+    // Headlights at the front corners.
+    var hlMat = physicalCyan(0xfff4c4, 1.4);
+    [0.34, -0.34].forEach(function (z) {
+      var hl = new THREE.Mesh(new THREE.SphereGeometry(0.05 * scale, 14, 14), hlMat);
+      hl.position.set(1.02 * scale, 0.36 * scale, z * scale);
       g.add(hl);
     });
-    // tail lights
+    // Tail lights.
     var tlMat = physicalCyan(0xff5566, 0.9);
-    [0.36, -0.36].forEach(function (z) {
-      var tl = new THREE.Mesh(new THREE.SphereGeometry(0.04 * scale, 12, 12), tlMat);
-      tl.position.set(-0.92 * scale, 0.25 * scale, z * scale);
+    [0.34, -0.34].forEach(function (z) {
+      var tl = new THREE.Mesh(new THREE.BoxGeometry(0.04 * scale, 0.06 * scale, 0.14 * scale), tlMat);
+      tl.position.set(-1.04 * scale, 0.4 * scale, z * scale);
       g.add(tl);
     });
-    // wheels
-    var rimMat = physicalMetal(0xc6cdd6, { roughness: 0.25 });
-    var tireMat = new THREE.MeshStandardMaterial({ color: 0x0a0e16, roughness: 0.85, metalness: 0.05 });
-    var wheelGeo = new THREE.CylinderGeometry(0.17 * scale, 0.17 * scale, 0.14 * scale, 22);
-    var hubGeo = new THREE.CylinderGeometry(0.08 * scale, 0.08 * scale, 0.16 * scale, 18);
+
+    // Wheels — set so the TIRE BOTTOM sits at y=0 (ground), well below body.
+    var rimMat = physicalMetal(0xc6cdd6, { roughness: 0.22 });
+    var tireMat = new THREE.MeshStandardMaterial({ color: 0x0a0e16, roughness: 0.88, metalness: 0.05 });
+    var tireR = 0.21 * scale;
+    var wheelGeo = new THREE.CylinderGeometry(tireR, tireR, 0.16 * scale, 24);
+    var rimGeo = new THREE.CylinderGeometry(tireR * 0.55, tireR * 0.55, 0.18 * scale, 18);
+    var wheelY = tireR; // bottom of wheel at y = 0
     [[0.65, 0.42], [-0.65, 0.42], [0.65, -0.42], [-0.65, -0.42]].forEach(function (p) {
       var tire = new THREE.Mesh(wheelGeo, tireMat);
       tire.rotation.x = Math.PI / 2;
-      tire.position.set(p[0] * scale, 0.16 * scale, p[1] * scale);
+      tire.position.set(p[0] * scale, wheelY, p[1] * scale);
       g.add(tire);
-      var hub = new THREE.Mesh(hubGeo, rimMat);
-      hub.rotation.x = Math.PI / 2;
-      hub.position.set(p[0] * scale, 0.16 * scale, p[1] * scale);
-      g.add(hub);
+      var rim = new THREE.Mesh(rimGeo, rimMat);
+      rim.rotation.x = Math.PI / 2;
+      rim.position.set(p[0] * scale, wheelY, p[1] * scale);
+      g.add(rim);
     });
+
     return g;
   }
 
   function buildTruck(scale, color) {
+    // Box-truck / cabover side-profile silhouette: tall trailer behind a
+    // shorter cab with sloped windshield. Clear gap between them.
     scale = scale || 1;
     color = color || MID_BODY;
     var g = new THREE.Group();
-    var paint = physicalPaint(color, { metalness: 0.55, roughness: 0.32, clearcoat: 0.85 });
-    // trailer
-    var trailerGeo = roundedBox(2.0 * scale, 0.85 * scale, 0.92 * scale, 0.08 * scale);
-    trailerGeo.center();
-    var trailer = new THREE.Mesh(trailerGeo, paint);
-    trailer.position.set(0.3 * scale, 0.55 * scale, 0);
-    g.add(trailer);
-    // cab
-    var cabGeo = roundedBox(0.72 * scale, 0.88 * scale, 0.86 * scale, 0.08 * scale);
-    cabGeo.center();
+    var paint = physicalPaint(color, { metalness: 0.45, roughness: 0.32, clearcoat: 0.9, clearcoatRoughness: 0.08 });
+
+    // Cab side profile (front section).
+    var cabShape = new THREE.Shape();
+    cabShape.moveTo(0.45, 0.32);                    // cab rear bottom (above frame)
+    cabShape.lineTo(0.45, 1.05);                    // cab rear top
+    cabShape.lineTo(0.95, 1.05);                    // cab roof
+    cabShape.lineTo(1.05, 0.95);                    // roof front corner
+    cabShape.lineTo(1.15, 0.7);                     // windshield slope
+    cabShape.lineTo(1.20, 0.55);                    // hood line
+    cabShape.lineTo(1.35, 0.5);                     // hood front
+    cabShape.lineTo(1.35, 0.32);                    // grille / front bumper
+    cabShape.lineTo(0.45, 0.32);
+    var cabGeo = new THREE.ExtrudeGeometry(cabShape, {
+      depth: 0.92, bevelEnabled: true, bevelSegments: 2, bevelSize: 0.04, bevelThickness: 0.04, curveSegments: 12
+    });
+    cabGeo.translate(0, 0, -0.46);
+    cabGeo.scale(scale, scale, scale);
     var cab = new THREE.Mesh(cabGeo, paint);
-    cab.position.set(-0.95 * scale, 0.55 * scale, 0);
     g.add(cab);
-    // windshield
-    var glass = physicalGlass();
-    var ws = new THREE.Mesh(new THREE.PlaneGeometry(0.04 * scale, 0.42 * scale), glass);
-    ws.position.set(-0.6 * scale, 0.7 * scale, 0);
-    ws.rotation.y = Math.PI / 2;
-    g.add(ws);
-    // headlight bar
-    var hl = new THREE.Mesh(
-      new THREE.BoxGeometry(0.04 * scale, 0.06 * scale, 0.6 * scale),
-      physicalCyan(0xfff4c4, 1.4)
-    );
-    hl.position.set(-1.32 * scale, 0.42 * scale, 0);
-    g.add(hl);
-    // wheels
-    var tireMat = new THREE.MeshStandardMaterial({ color: 0x0a0e16, roughness: 0.85, metalness: 0.05 });
-    var rimMat = physicalMetal(0xc6cdd6, { roughness: 0.25 });
-    var wGeo = new THREE.CylinderGeometry(0.2 * scale, 0.2 * scale, 0.15 * scale, 18);
-    var hGeo = new THREE.CylinderGeometry(0.09 * scale, 0.09 * scale, 0.17 * scale, 14);
-    [-1.05, -0.42, 0.5, 1.0].forEach(function (x) {
+
+    // Trailer (taller box behind the cab, small gap).
+    var trGeo = roundedBox(1.6 * scale, 1.1 * scale, 0.94 * scale, 0.05 * scale);
+    trGeo.center();
+    var trailer = new THREE.Mesh(trGeo, paint);
+    trailer.position.set(-0.45 * scale, 0.87 * scale, 0);
+    g.add(trailer);
+
+    // Trailer divider line (visual seam).
+    var seamMat = new THREE.MeshBasicMaterial({ color: 0x07101f });
+    var seam = new THREE.Mesh(new THREE.PlaneGeometry(0.01 * scale, 1.0 * scale), seamMat);
+    seam.position.set(0.36 * scale, 0.85 * scale, 0.47 * scale);
+    g.add(seam);
+
+    // Windshield (sloped) — glass plate over the slope on each side.
+    var glass = physicalGlass(0x07101f);
+    [0.42, -0.42].forEach(function (z) {
+      var ws = new THREE.Mesh(new THREE.PlaneGeometry(0.28 * scale, 0.32 * scale), glass);
+      ws.position.set(1.08 * scale, 0.8 * scale, z * scale);
+      ws.rotation.y = z > 0 ? -0.05 : Math.PI + 0.05;
+      ws.rotation.z = -0.55;
+      g.add(ws);
+    });
+
+    // Headlight bar
+    var hlMat = physicalCyan(0xfff4c4, 1.5);
+    [0.34, -0.34].forEach(function (z) {
+      var hl = new THREE.Mesh(new THREE.BoxGeometry(0.04 * scale, 0.08 * scale, 0.16 * scale), hlMat);
+      hl.position.set(1.34 * scale, 0.4 * scale, z * scale);
+      g.add(hl);
+    });
+
+    // Wheels — three axles (cab pair, trailer front pair, trailer rear pair).
+    var rimMat = physicalMetal(0xc6cdd6, { roughness: 0.22 });
+    var tireMat = new THREE.MeshStandardMaterial({ color: 0x0a0e16, roughness: 0.88, metalness: 0.05 });
+    var tireR = 0.26 * scale;
+    var wGeo = new THREE.CylinderGeometry(tireR, tireR, 0.18 * scale, 22);
+    var rGeo = new THREE.CylinderGeometry(tireR * 0.5, tireR * 0.5, 0.2 * scale, 16);
+    var wheelY = tireR;
+    [1.15, 0.05, -0.65, -1.25].forEach(function (x) {
       [0.46, -0.46].forEach(function (z) {
-        var t = new THREE.Mesh(wGeo, tireMat);
-        t.rotation.x = Math.PI / 2;
-        t.position.set(x * scale, 0.18 * scale, z * scale);
-        g.add(t);
-        var h = new THREE.Mesh(hGeo, rimMat);
-        h.rotation.x = Math.PI / 2;
-        h.position.set(x * scale, 0.18 * scale, z * scale);
-        g.add(h);
+        var tire = new THREE.Mesh(wGeo, tireMat);
+        tire.rotation.x = Math.PI / 2;
+        tire.position.set(x * scale, wheelY, z * scale);
+        g.add(tire);
+        var rim = new THREE.Mesh(rGeo, rimMat);
+        rim.rotation.x = Math.PI / 2;
+        rim.position.set(x * scale, wheelY, z * scale);
+        g.add(rim);
       });
     });
+
     return g;
   }
 
