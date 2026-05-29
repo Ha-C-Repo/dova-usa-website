@@ -297,7 +297,7 @@ button { font-family: inherit; cursor: pointer; }
   position: relative;
   overflow: hidden;
 }
-.hero.compact { min-height: auto; padding: 56px 48px 50px; }
+.hero.compact { min-height: auto; padding: 24px 48px 24px; }
 .hero-dots {
   position: absolute;
   inset: 0;
@@ -2516,9 +2516,9 @@ textarea:focus-visible {
 .hero-mini-stage {
   position: relative;
   width: 100%;
-  max-width: 1000px;
-  margin: 0 auto 28px;
-  height: clamp(280px, 32vw, 380px);
+  max-width: 1080px;
+  margin: 12px auto 20px;
+  height: clamp(300px, 34vw, 400px);
   pointer-events: auto;
 }
 .hero-mini-stage canvas.hero-mini {
@@ -2534,8 +2534,9 @@ textarea:focus-visible {
   height: 100%;
   opacity: 0.85;
 }
-.hero.compact { padding-top: 32px; }
+.hero.compact { padding-top: 20px; padding-bottom: 28px; }
 .hero.compact .hero-eyebrow { margin-top: 8px; }
+.hero.compact + .section, .hero.compact + section { padding-top: 36px; }
 @media (max-width: 720px) {
   .hero-mini-stage { height: 160px; max-width: 100%; }
   .hero-mini-stage canvas.hero-mini { display: none; }
