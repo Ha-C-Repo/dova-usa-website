@@ -4,352 +4,269 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>D.O.V.A. - Smarter, Safer Vehicle Access</title>
-<meta name="description" content="The only cloud-connected OBD-II fleet access platform compatible with every U.S. vehicle since 1996. Three-gate authorization. Diagnostic-linked access log. Patent Pending.">
+<meta name="description" content="DOVA is preparing the next release. Smarter, safer vehicle access.">
+<meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://dovausa.com/">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://dovausa.com/">
-<meta property="og:title" content="D.O.V.A. - Smarter, Safer Vehicle Access">
-<meta property="og:description" content="The only cloud-connected OBD-II fleet access platform compatible with every U.S. vehicle since 1996. Three-gate authorization. Diagnostic-linked access log. Patent Pending.">
-<meta property="og:image" content="https://dovausa.com/assets/images/og/og-default.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:site_name" content="D.O.V.A., LLC">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="D.O.V.A. - Smarter, Safer Vehicle Access">
-<meta name="twitter:description" content="The only cloud-connected OBD-II fleet access platform compatible with every U.S. vehicle since 1996. Three-gate authorization. Diagnostic-linked access log. Patent Pending.">
-<meta name="twitter:image" content="https://dovausa.com/assets/images/og/og-default.png">
-<link rel="stylesheet" href="/assets/css/styles.css?v=23">
-<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "D.O.V.A., LLC",
-  "alternateName": "DOVA",
-  "url": "https://dovausa.com",
-  "logo": "https://dovausa.com/assets/images/dova_shield_stamp.svg",
-  "description": "Smarter, Safer Vehicle Access. Cloud-connected OBD-II authorization for fleet, rental, municipal, and automotive retail operators.",
-  "contactPoint": {
-    "@type": "ContactPoint",
-    "email": "info@dovausa.com",
-    "telephone": "+1-713-255-2172",
-    "contactType": "Sales",
-    "areaServed": "US"
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<style>
+  :root {
+    --navy: #0a1929;
+    --navy-2: #0e2138;
+    --navy-3: #142a48;
+    --cyan: #22d3ee;
+    --cyan-soft: rgba(34, 211, 238, 0.18);
+    --white: #ffffff;
+    --gray: #94a3b8;
+    --gray-dim: #6c8aa8;
   }
-}
-</script>
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+  }
+
+  .stage {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 35%, #14304f 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 50% 80%, #0d2240 0%, transparent 60%),
+      var(--navy);
+  }
+
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+
+  .dot-bg {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(34, 211, 238, 0.18) 1.2px, transparent 1.4px);
+    background-size: 28px 28px;
+    opacity: 0.45;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 75%);
+  }
+
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 620px;
+    height: 620px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.22) 0%, transparent 60%);
+    pointer-events: none;
+    filter: blur(40px);
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(140deg, #1a7fe8 0%, #22d3ee 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 28px rgba(34, 211, 238, 0.32);
+  }
+  .logo svg { width: 30px; height: 30px; }
+
+  .wordmark {
+    font-family: 'Syne', 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 6px;
+    color: var(--white);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: var(--cyan-soft);
+    border: 1px solid rgba(34, 211, 238, 0.45);
+    color: var(--cyan);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .pill .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+
+  h1 {
+    font-family: 'Syne', 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: clamp(44px, 7vw, 78px);
+    line-height: 1.02;
+    letter-spacing: -1px;
+    margin-bottom: 22px;
+    background: linear-gradient(180deg, #ffffff 0%, #c9d8ea 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  h1 .accent { color: var(--cyan); -webkit-text-fill-color: var(--cyan); }
+
+  .sub {
+    color: var(--gray);
+    font-size: clamp(15px, 1.7vw, 18px);
+    line-height: 1.55;
+    max-width: 480px;
+    margin: 0 auto 38px;
+  }
+
+  .tagline {
+    display: inline-block;
+    margin-bottom: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(148, 163, 184, 0.18);
+    color: var(--gray-dim);
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .contact {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--gray);
+  }
+  .contact a {
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .contact a:hover { border-color: var(--cyan); }
+  .contact .sep { color: rgba(148, 163, 184, 0.4); }
+
+  .scanner {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0.35;
+    pointer-events: none;
+    animation: scan 6s linear infinite;
+  }
+  @keyframes scan {
+    0% { top: 12%; }
+    100% { top: 92%; }
+  }
+
+  @media (max-width: 540px) {
+    .lockup { gap: 10px; margin-bottom: 22px; }
+    .logo { width: 46px; height: 46px; border-radius: 12px; }
+    .logo svg { width: 24px; height: 24px; }
+    .wordmark { font-size: 22px; letter-spacing: 5px; }
+    .pill { margin-bottom: 28px; font-size: 11px; }
+    h1 { margin-bottom: 18px; }
+    .sub { margin-bottom: 28px; }
+    .contact { gap: 14px; font-size: 13px; }
+    .contact .sep { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pill .dot, .scanner { animation: none; }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap">
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
 
-<!-- Announcement bar -->
-<div class="announce-bar">
-  <div class="ab-left">
-    <span class="ab-brand">D.O.V.A.</span>
-    <span class="ab-badge">PATENT PENDING</span>
-    <span class="ab-tagline">Digital Orchestration of Vehicle Authorization</span>
-  </div>
-  <div class="ab-right">
-    <a href="mailto:info@dovausa.com">info@dovausa.com</a>&nbsp;·&nbsp;(713) 255-2172
-  </div>
-</div>
+<main class="stage" role="main">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="dot-bg" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="scanner" aria-hidden="true"></div>
 
-<!-- Nav -->
-<nav class="nav" aria-label="Primary">
-  <a href="/" class="nav-logo">
-    <span class="logo-box"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L21 8l-3-3"/></svg></span>
-    D.O.V.A.
-  </a>
-  <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">&#9776;</button>
-  <ul class="nav-links">
-    <li><a href="/how-it-works/">How It Works</a></li>
-    <li><a href="/product/">Product</a></li>
-    <li><a href="/features/">Features</a></li>
-    <li class="dropdown">
-      <a href="/solutions/">Solutions</a>
-      <ul class="dropdown-menu">
-        <li><a href="/solutions/dealerships/">For Automotive Retail</a></li>
-        <li><a href="/solutions/fleet/">For Fleet Operators</a></li>
-        <li><a href="/post-sale/">Post-Sale Options</a></li>
-        <li><a href="/roi/">ROI Calculator</a></li>
-      </ul>
-    </li>
-    <li><a href="/contact/">Contact</a></li>
-    <li><a class="nav-cta magnetic" href="/contact/">Book a Demo</a></li>
-  </ul>
-</nav>
-
-<!-- Hero (immersive, Three.js scene + scroll-driven camera) -->
-<section class="imm2-hero" id="immHero" aria-label="DOVA platform hero">
-  <a id="main" tabindex="-1"></a>
-  <div class="imm2-text">
-    <div class="imm2-eyebrow">
-      <span class="pulse-dot"></span>
-      Patent Pending &middot; Enterprise Vehicle Access
-    </div>
-    <h1 class="imm2-h1">
-      <span class="gradline" id="immH1Line1">Smarter,</span>
-      <span class="gradline" id="immH1Line2">Safer Vehicle</span>
-      <span class="gradline" id="immH1Line3">Access.</span>
-    </h1>
-    <p class="imm2-sub" id="immSub">
-      The only cloud-connected OBD-II platform that works on every U.S. vehicle since 1996. No OEM agreements, no lockboxes, no lost keys.
-    </p>
-    <div class="imm2-btns">
-      <a href="/contact/" class="imm2-btn-p magnetic">Book a Demo</a>
-      <a href="/how-it-works/" class="imm2-btn-s">How It Works &rarr;</a>
-    </div>
-    <div class="imm2-steps">
-      <span class="imm2-step-label" id="stepLabel">Install</span>
-      <div class="imm2-step-dots">
-        <span class="active" data-step="0"></span>
-        <span data-step="1"></span>
-        <span data-step="2"></span>
-        <span data-step="3"></span>
-        <span data-step="4"></span>
-        <span data-step="5"></span>
+  <section class="card">
+    <div class="lockup">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="7.5" cy="15.5" r="5.5"/>
+          <path d="M21 2l-9.6 9.6"/>
+          <path d="M15.5 7.5l3 3L21 8l-3-3"/>
+        </svg>
       </div>
-      <span style="opacity: 0.6; font-size: 12px;">Scroll to navigate the platform</span>
+      <div class="wordmark">D.O.V.A.</div>
     </div>
-  </div>
-  <div class="imm2-stage" id="immStage">
-    <canvas id="scene3d" aria-hidden="true"></canvas>
-    <picture class="imm2-stage-fallback">
-      <source srcset="/assets/images/dova-hero-frame-1.avif" type="image/avif">
-      <source srcset="/assets/images/dova-hero-frame-1.webp" type="image/webp">
-      <img src="/assets/images/dova-hero-frame-1.png" alt="DOVA module installed in OBD-II port" width="1344" height="768">
-    </picture>
-    <div class="imm2-loading" id="loadingEl"><div class="imm2-loading-ring"></div><div class="imm2-loading-label">Initializing access layer</div></div>
-  </div>
-</section>
 
-<!-- Stats bar -->
-<div class="stats-bar bg-grid-cyan">
-  <div class="stat-cell">
-    <div class="stat-micro" aria-hidden="true">
-      <svg viewBox="0 0 160 28" class="stat-svg">
-        <line x1="6" y1="20" x2="154" y2="20" stroke="rgba(0,200,232,0.18)" stroke-width="1"/>
-        <g class="stat-year-ticks">
-          <line x1="12"  y1="14" x2="12"  y2="20" stroke="#00C8E8" stroke-width="1.6"/>
-          <line x1="28"  y1="14" x2="28"  y2="20" stroke="#00C8E8" stroke-width="1.6"/>
-          <line x1="44"  y1="14" x2="44"  y2="20" stroke="#00C8E8" stroke-width="1.6"/>
-          <line x1="60"  y1="14" x2="60"  y2="20" stroke="#00C8E8" stroke-width="1.6"/>
-          <line x1="76"  y1="14" x2="76"  y2="20" stroke="#00C8E8" stroke-width="1.6"/>
-          <line x1="92"  y1="14" x2="92"  y2="20" stroke="#00C8E8" stroke-width="1.6"/>
-          <line x1="108" y1="14" x2="108" y2="20" stroke="#00C8E8" stroke-width="1.6"/>
-          <line x1="124" y1="14" x2="124" y2="20" stroke="#00C8E8" stroke-width="1.6"/>
-          <line x1="140" y1="14" x2="140" y2="20" stroke="#00C8E8" stroke-width="1.6"/>
-        </g>
-        <circle class="stat-year-head" cx="148" cy="20" r="3.2" fill="#00C8E8"/>
-      </svg>
+    <div class="pill">
+      <span class="dot"></span>
+      <span>Patent Pending</span>
     </div>
-    <div class="stat-n" data-no-count="true">1996<span class="hi stat-arrow" aria-hidden="true">→</span></div>
-    <div class="stat-l">Every U.S. vehicle, 1996 and on</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-micro" aria-hidden="true">
-      <svg viewBox="0 0 160 28" class="stat-svg">
-        <g class="stat-chain">
-          <ellipse class="link l1" cx="62" cy="14" rx="14" ry="7" fill="none" stroke="#00C8E8" stroke-width="2"/>
-          <ellipse class="link l2" cx="98" cy="14" rx="14" ry="7" fill="none" stroke="#00C8E8" stroke-width="2"/>
-          <line class="chain-break" x1="76" y1="14" x2="84" y2="14" stroke="#00C8E8" stroke-width="2.2" stroke-linecap="round"/>
-        </g>
-      </svg>
-    </div>
-    <div class="stat-n" data-no-count="true">$0</div>
-    <div class="stat-l">OEM licensing fees required</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-micro" aria-hidden="true">
-      <svg viewBox="0 0 160 28" class="stat-svg">
-        <circle cx="80" cy="14" r="10" fill="none" stroke="rgba(0,200,232,0.32)" stroke-width="1.2"/>
-        <g class="stat-clock-marks">
-          <line x1="80" y1="6"  x2="80" y2="9"  stroke="#00C8E8" stroke-width="1.2"/>
-          <line x1="80" y1="19" x2="80" y2="22" stroke="#00C8E8" stroke-width="1.2"/>
-          <line x1="72" y1="14" x2="69" y2="14" stroke="#00C8E8" stroke-width="1.2"/>
-          <line x1="91" y1="14" x2="88" y2="14" stroke="#00C8E8" stroke-width="1.2"/>
-        </g>
-        <line class="stat-clock-hand" x1="80" y1="14" x2="80" y2="7.5" stroke="#00C8E8" stroke-width="1.6" stroke-linecap="round"/>
-        <circle cx="80" cy="14" r="1.4" fill="#00C8E8"/>
-      </svg>
-    </div>
-    <div class="stat-n">18<span class="hi"> min</span></div>
-    <div class="stat-l">Avg. time wasted per access, eliminated</div>
-  </div>
-  <div class="stat-cell">
-    <div class="stat-micro" aria-hidden="true">
-      <svg viewBox="0 0 160 28" class="stat-svg">
-        <g class="stat-matrix"></g>
-      </svg>
-    </div>
-    <div class="stat-n">100<span class="hi">%</span></div>
-    <div class="stat-l">Fleet compatible, day one</div>
-  </div>
-</div>
 
-<!-- Problem -->
-<section class="section alt">
-  <div class="prob-inner">
-    <div>
-      <div class="eyebrow">The Problem</div>
-      <div class="prob-quote">"Physical Keys Are a Liability."</div>
-      <p class="s-body">Keys walk off lots. Paper logs get falsified. When a vehicle goes missing, damage is disputed, or an employee is involved in an incident - there is no reliable record. Just a paper log that may or may not be accurate. DOVA was built to solve that completely.</p>
-    </div>
-    <div class="prob-list">
-      <div class="prob-item"><span class="prob-dot"></span>No verifiable record of who accessed which vehicle</div>
-      <div class="prob-item"><span class="prob-dot"></span>No way to require supervisor approval before access</div>
-      <div class="prob-item"><span class="prob-dot"></span>No vehicle condition snapshot at time of access</div>
-      <div class="prob-item"><span class="prob-dot"></span>No enforcement - only policy, no mechanism</div>
-    </div>
-  </div>
-</section>
+    <h1>Back <span class="accent">Soon.</span></h1>
 
-<!-- DOVA Difference -->
-<section class="section white">
-  <div class="inner">
-    <div class="eyebrow">The DOVA Difference</div>
-    <h2 class="s-h2">Not Just Access Control. <br><span class="acc">Accountability Infrastructure.</span></h2>
-    <p class="s-body">Three patent-pending innovations that no competitor offers - individually or in combination.</p>
-    <div class="cards-grid">
-      <div class="d-card spotlight">
-        <div class="d-card-stripe"></div>
-        <div class="c-tag">Core Patent Asset</div>
-        <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
-        <div class="c-h3">Three Gates. In Sequence. Every Time.</div>
-        <p class="c-body">Identity verified via 2FA. Role confirmed for that vehicle. Manager approval received where required. No command reaches a vehicle until all three gates clear - in order. Machine-enforced, not policy-based.</p>
-      </div>
-      <div class="d-card spotlight">
-        <div class="d-card-stripe"></div>
-        <div class="c-tag">Crown Jewel IP</div>
-        <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-        <div class="c-h3">Every Access. Permanently Documented.</div>
-        <p class="c-body">Every access event is cryptographically bound to a real-time OBD-II diagnostic snapshot - odometer, fuel, battery state of charge, tire pressure, fault codes. Write-once. Tamper-evident. Legally admissible.</p>
-      </div>
-      <div class="d-card spotlight">
-        <div class="d-card-stripe"></div>
-        <div class="c-tag">No OEM Required</div>
-        <div class="c-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"/><line x1="9" y1="3" x2="9" y2="18"/><line x1="15" y1="6" x2="15" y2="21"/></svg></div>
-        <div class="c-h3">Every Vehicle. No Permission Needed.</div>
-        <p class="c-body">DOVA works on every U.S. vehicle since 1996 via the federally mandated OBD-II port. No OEM agreements. No infotainment access. One module, every make, every model.</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <p class="sub">DOVA is finalizing the next release. The platform returns shortly with new capabilities for the teams that operate vehicles every day.</p>
 
-<!-- Audiences -->
-<section class="section">
-  <div class="inner">
-    <div class="eyebrow">Built For</div>
-    <h2 class="s-h2">Built for the Teams That <br><span class="acc">Can't Afford to Lose a Vehicle.</span></h2>
-    <div class="aud-grid">
-      <a href="/solutions/dealerships/" class="aud-card">
-        <span class="aud-arr">&rarr;</span>
-        <div class="aud-ttl">For Automotive Retail</div>
-        <div class="aud-dsc">Stop losing time to lost keys. Build a cryptographic record that protects your lot, your inventory, and every customer relationship.</div>
-      </a>
-      <a href="/solutions/fleet/" class="aud-card">
-        <span class="aud-arr">&rarr;</span>
-        <div class="aud-ttl">Commercial Fleet Operators</div>
-        <div class="aud-dsc">Centralized access control, real-time visibility, and a permanent diagnostic-linked log for every vehicle in your fleet.</div>
-      </a>
-      <a href="/solutions/fleet/" class="aud-card">
-        <span class="aud-arr">&rarr;</span>
-        <div class="aud-ttl">Rental &amp; Logistics Companies</div>
-        <div class="aud-dsc">Role-based access, configurable manager approval gates, and a tamper-evident record for every transaction across your entire operation.</div>
-      </a>
-    </div>
-  </div>
-</section>
+    <div class="tagline">Smarter, Safer Vehicle Access</div>
 
-<!-- Bottom CTA -->
-<!-- Cinematic backdrop (5i). Veo-ready: drop /assets/videos/dova-backdrop.webm to activate. CSS fallback runs otherwise. -->
-<section class="cinematic-bed">
-  <div class="cinematic-bed-fallback"></div>
-  <video class="cinematic-bed-video" autoplay muted loop playsinline aria-hidden="true" preload="metadata"
-         data-src="/assets/videos/dova-backdrop.webm" data-src-mp4="/assets/videos/dova-backdrop.mp4"></video>
-  <div class="cinematic-bed-scrim"></div>
-  <div class="cinematic-bed-text">
-    <div class="cinematic-bed-eyebrow">The DOVA Loop</div>
-    <h2 class="cinematic-bed-h2">Identity verified. Vehicle authorized.<br>Diagnostic recorded.</h2>
-    <p class="cinematic-bed-sub">The full authorization loop, on every vehicle you operate. Built to scale across makes, model years, and shift teams.</p>
-    <div class="btn-row"><a href="/contact/" class="btn-p magnetic">Book a Demo</a><a href="/how-it-works/" class="btn-s">See the Architecture &rarr;</a></div>
-  </div>
-</section>
-<section class="b-cta bg-grid-cyan">
-  <div class="b-cta-glow"></div>
-  <div class="b-cta-dots"></div>
-  <div class="eyebrow centered">Ready to Deploy</div>
-  <h2 class="s-h2">Ready to Modernize <br>Vehicle Access?</h2>
-  <p class="s-body centered">DOVA is live, patent pending, and ready to deploy. Let us show you what it does for your operation.</p>
-  <div class="btn-row">
-    <a href="/contact/" class="btn-p-w magnetic">Book a Demo</a>
-    <a href="/product/" class="btn-s-w">View Product &rarr;</a>
-  </div>
-</section>
+    <nav class="contact" aria-label="Contact">
+      <span><a href="mailto:info@dovausa.com">info@dovausa.com</a></span>
+      <span class="sep">|</span>
+      <span><a href="tel:+17132552172">(713) 255-2172</a></span>
+    </nav>
+  </section>
+</main>
 
-<!-- Footer -->
-<footer class="footer">
-  <div class="footer-grid">
-    <div>
-      <div class="f-logo">
-        <span class="logo-box"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L21 8l-3-3"/></svg></span>
-        D.O.V.A., LLC
-      </div>
-      <div class="f-tag">Smarter, Safer Vehicle Access</div>
-      <div class="f-contact">
-        <a href="mailto:info@dovausa.com">info@dovausa.com</a>
-        <a href="tel:+17132552172">(713) 255-2172</a>
-        <a href="https://dovausa.com">dovausa.com</a>
-      </div>
-    </div>
-    <div class="f-col">
-      <h4>Platform</h4>
-      <a href="/how-it-works/">How It Works</a>
-      <a href="/product/">Product</a>
-      <a href="/features/">Features</a>
-      <a href="/post-sale/">Post-Sale Options</a>
-    </div>
-    <div class="f-col">
-      <h4>Solutions</h4>
-      <a href="/solutions/dealerships/">For Automotive Retail</a>
-      <a href="/solutions/fleet/">For Fleet Operators</a>
-      <a href="/roi/">ROI Calculator</a>
-      <a href="/contact/">Book a Demo</a>
-    </div>
-  </div>
-  <div class="f-bottom">
-    <p>&copy; D.O.V.A., LLC 2026. All Rights Reserved. &middot; San Antonio, Texas</p>
-    <div class="f-pills">
-      <span class="f-pill">Patent Pending</span>
-      <span class="f-pill">&copy; 2026</span>
-    </div>
-  </div>
-</footer>
-
-<script src="/assets/js/main.js?v=10"></script>
-<script src="/assets/js/cursor.js?v=10" defer></script>
-<script src="/assets/js/reveals.js?v=10" defer></script>
-<script src="/assets/js/transitions.js?v=10" defer></script>
-<script src="/assets/js/cinematic-bed.js?v=10" defer></script>
-<script src="/assets/js/primitives.js?v=10" defer></script>
-<script src="/assets/js/interactive.js?v=2" defer></script>
-
-<!-- Three.js + GSAP + Lenis (Phase 4h immersive hero) -->
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
-    "three/addons/": "https://unpkg.com/three@0.165.0/examples/jsm/"
-  }
-}
-</script>
-<script type="module" src="/assets/js/hero-scene.js?v=10"></script>
-<!-- Cloudflare Web Analytics (free, no cookies). Activate by replacing the token below.
-     To get a token: dash.cloudflare.com -> Analytics & Logs -> Web Analytics -> Add a site (dovausa.com).
-     The script below stays inert until the placeholder is replaced. -->
-<script>(function(){var t='8ccefc81e33e424e8b89d94660e75ac8';if(t&&t.indexOf('REPLACE_WITH')===-1){var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon',JSON.stringify({token:t}));document.head.appendChild(s);}})();</script>
 </body>
 </html>

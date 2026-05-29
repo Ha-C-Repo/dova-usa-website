@@ -3,56 +3,270 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page Not Found | D.O.V.A.</title>
-<link rel="stylesheet" href="/assets/css/styles.css?v=23">
-<link rel="icon" type="image/svg+xml" href="/assets/images/favicon.svg">
+<title>D.O.V.A. - Smarter, Safer Vehicle Access</title>
+<meta name="description" content="DOVA is preparing the next release. Smarter, safer vehicle access.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://dovausa.com/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
+<style>
+  :root {
+    --navy: #0a1929;
+    --navy-2: #0e2138;
+    --navy-3: #142a48;
+    --cyan: #22d3ee;
+    --cyan-soft: rgba(34, 211, 238, 0.18);
+    --white: #ffffff;
+    --gray: #94a3b8;
+    --gray-dim: #6c8aa8;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    height: 100%;
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow: hidden;
+  }
+
+  .stage {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 24px;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 35%, #14304f 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 50% 80%, #0d2240 0%, transparent 60%),
+      var(--navy);
+  }
+
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(34, 211, 238, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34, 211, 238, 0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 30%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 30%, transparent 80%);
+  }
+
+  .dot-bg {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle, rgba(34, 211, 238, 0.18) 1.2px, transparent 1.4px);
+    background-size: 28px 28px;
+    opacity: 0.45;
+    pointer-events: none;
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 75%);
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 0%, transparent 75%);
+  }
+
+  .glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 620px;
+    height: 620px;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(34, 211, 238, 0.22) 0%, transparent 60%);
+    pointer-events: none;
+    filter: blur(40px);
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .lockup {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .logo {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(140deg, #1a7fe8 0%, #22d3ee 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 28px rgba(34, 211, 238, 0.32);
+  }
+  .logo svg { width: 30px; height: 30px; }
+
+  .wordmark {
+    font-family: 'Syne', 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 28px;
+    letter-spacing: 6px;
+    color: var(--white);
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 16px;
+    border-radius: 999px;
+    background: var(--cyan-soft);
+    border: 1px solid rgba(34, 211, 238, 0.45);
+    color: var(--cyan);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+  }
+  .pill .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--cyan);
+    box-shadow: 0 0 12px var(--cyan);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; transform: scale(0.9); }
+    50% { opacity: 1; transform: scale(1.1); }
+  }
+
+  h1 {
+    font-family: 'Syne', 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: clamp(44px, 7vw, 78px);
+    line-height: 1.02;
+    letter-spacing: -1px;
+    margin-bottom: 22px;
+    background: linear-gradient(180deg, #ffffff 0%, #c9d8ea 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  h1 .accent { color: var(--cyan); -webkit-text-fill-color: var(--cyan); }
+
+  .sub {
+    color: var(--gray);
+    font-size: clamp(15px, 1.7vw, 18px);
+    line-height: 1.55;
+    max-width: 480px;
+    margin: 0 auto 38px;
+  }
+
+  .tagline {
+    display: inline-block;
+    margin-bottom: 32px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(148, 163, 184, 0.18);
+    color: var(--gray-dim);
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .contact {
+    display: flex;
+    justify-content: center;
+    gap: 28px;
+    flex-wrap: wrap;
+    font-size: 14px;
+    color: var(--gray);
+  }
+  .contact a {
+    color: var(--cyan);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s ease;
+  }
+  .contact a:hover { border-color: var(--cyan); }
+  .contact .sep { color: rgba(148, 163, 184, 0.4); }
+
+  .scanner {
+    position: absolute;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+    opacity: 0.35;
+    pointer-events: none;
+    animation: scan 6s linear infinite;
+  }
+  @keyframes scan {
+    0% { top: 12%; }
+    100% { top: 92%; }
+  }
+
+  @media (max-width: 540px) {
+    .lockup { gap: 10px; margin-bottom: 22px; }
+    .logo { width: 46px; height: 46px; border-radius: 12px; }
+    .logo svg { width: 24px; height: 24px; }
+    .wordmark { font-size: 22px; letter-spacing: 5px; }
+    .pill { margin-bottom: 28px; font-size: 11px; }
+    h1 { margin-bottom: 18px; }
+    .sub { margin-bottom: 28px; }
+    .contact { gap: 14px; font-size: 13px; }
+    .contact .sep { display: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pill .dot, .scanner { animation: none; }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Syne:wght@700;800&display=swap">
 </head>
 <body>
-<a class="skip-link" href="#main">Skip to content</a>
 
-<div class="announce-bar">
-  <div class="ab-left"><span class="ab-brand">D.O.V.A.</span><span class="ab-badge">PATENT PENDING</span><span class="ab-tagline">Digital Orchestration of Vehicle Authorization</span></div>
-  <div class="ab-right"><a href="mailto:info@dovausa.com">info@dovausa.com</a>&nbsp;·&nbsp;(713) 255-2172</div>
-</div>
+<main class="stage" role="main">
+  <div class="grid-bg" aria-hidden="true"></div>
+  <div class="dot-bg" aria-hidden="true"></div>
+  <div class="glow" aria-hidden="true"></div>
+  <div class="scanner" aria-hidden="true"></div>
 
-<nav class="nav" aria-label="Primary">
-  <a href="/" class="nav-logo"><span class="logo-box"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="15.5" r="5.5"/><path d="M21 2l-9.6 9.6"/><path d="M15.5 7.5l3 3L21 8l-3-3"/></svg></span>D.O.V.A.</a>
-  <ul class="nav-links">
-    <li><a href="/how-it-works/">How It Works</a></li>
-    <li><a href="/product/">Product</a></li>
-    <li><a href="/features/">Features</a></li>
-    <li><a href="/solutions/">Solutions</a></li>
-    <li><a href="/contact/">Contact</a></li>
-    <li><a class="nav-cta magnetic" href="/contact/">Book a Demo</a></li>
-  </ul>
-</nav>
+  <section class="card">
+    <div class="lockup">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="7.5" cy="15.5" r="5.5"/>
+          <path d="M21 2l-9.6 9.6"/>
+          <path d="M15.5 7.5l3 3L21 8l-3-3"/>
+        </svg>
+      </div>
+      <div class="wordmark">D.O.V.A.</div>
+    </div>
 
-<section class="hero" id="main">
-  <div class="hero-dots"></div><div class="hero-vignette"></div><div class="hero-glow"></div>
-  <div class="hero-badge"><span class="pulse-dot"></span>404 - Page Not Found</div>
-  <h1 class="hero-h1"><span class="grad-text">404.</span></h1>
-  <p class="hero-sub">That page doesn't exist. The URL you followed isn't valid. The links below will get you back on track.</p>
-  <div class="hero-btns">
-    <a href="/" class="btn-p magnetic">Back to Home</a>
-    <a href="/contact/" class="btn-s">Contact</a>
-  </div>
-</section>
+    <div class="pill">
+      <span class="dot"></span>
+      <span>Patent Pending</span>
+    </div>
 
-<footer class="footer">
-  <div class="f-bottom">
-    <p>&copy; D.O.V.A., LLC 2026. All Rights Reserved. &middot; San Antonio, Texas</p>
-    <div class="f-pills"><span class="f-pill">Patent Pending</span><span class="f-pill">&copy; 2026</span></div>
-  </div>
-</footer>
+    <h1>Back <span class="accent">Soon.</span></h1>
 
-<!-- Cloudflare Web Analytics (free, no cookies). Activate by replacing the token below.
-     To get a token: dash.cloudflare.com -> Analytics & Logs -> Web Analytics -> Add a site (dovausa.com).
-     The script below stays inert until the placeholder is replaced. -->
-<script>(function(){var t='8ccefc81e33e424e8b89d94660e75ac8';if(t&&t.indexOf('REPLACE_WITH')===-1){var s=document.createElement('script');s.defer=true;s.src='https://static.cloudflareinsights.com/beacon.min.js';s.setAttribute('data-cf-beacon',JSON.stringify({token:t}));document.head.appendChild(s);}})();</script>
-<script src="/assets/js/cursor.js?v=10" defer></script>
-<script src="/assets/js/reveals.js?v=10" defer></script>
-<script src="/assets/js/transitions.js?v=10" defer></script>
-<script src="/assets/js/interactive.js?v=2" defer></script>
+    <p class="sub">DOVA is finalizing the next release. The platform returns shortly with new capabilities for the teams that operate vehicles every day.</p>
+
+    <div class="tagline">Smarter, Safer Vehicle Access</div>
+
+    <nav class="contact" aria-label="Contact">
+      <span><a href="mailto:info@dovausa.com">info@dovausa.com</a></span>
+      <span class="sep">|</span>
+      <span><a href="tel:+17132552172">(713) 255-2172</a></span>
+    </nav>
+  </section>
+</main>
 
 </body>
 </html>
